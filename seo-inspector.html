@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Free SEO & Meta Tag Inspector — LaunchKit Tools</title>
+  <meta name="description" content="Audit your website's technical SEO, title length, meta description, OpenGraph tags, and heading structure with zero delay. Free online SEO tool." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #05070e;
+      --card-bg: rgba(17, 24, 39, 0.7);
+      --border: rgba(255, 255, 255, 0.08);
+      --accent: #6366f1;
+      --accent-hover: #4f46e5;
+      --text: #f3f4f6;
+      --text-muted: #9ca3af;
+      --success: #10b981;
+      --warning: #f59e0b;
+      --danger: #ef4444;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      line-height: 1.6;
+      background-image: 
+        radial-gradient(ellipse 80% 50% at 50% -20%, rgba(99, 102, 241, 0.15), transparent),
+        radial-gradient(circle at 80% 20%, rgba(139, 92, 246, 0.08), transparent);
+    }
+    .header {
+      max-width: 900px;
+      margin: 0 auto;
+      text-align: center;
+      padding: 60px 20px 30px;
+    }
+    .badge {
+      display: inline-block;
+      padding: 5px 14px;
+      border-radius: 9999px;
+      background: rgba(99, 102, 241, 0.15);
+      border: 1px solid rgba(99, 102, 241, 0.3);
+      color: #818cf8;
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 16px;
+    }
+    h1 {
+      font-size: clamp(2rem, 4.5vw, 3.2rem);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      margin-bottom: 16px;
+      background: linear-gradient(135deg, #fff 40%, #a5b4fc 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .subtitle {
+      font-size: 1.1rem;
+      color: var(--text-muted);
+      max-width: 600px;
+      margin: 0 auto 30px;
+    }
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 20px 80px;
+    }
+    .input-box {
+      background: var(--card-bg);
+      backdrop-filter: blur(16px);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 24px;
+      margin-bottom: 30px;
+    }
+    textarea {
+      width: 100%;
+      height: 140px;
+      background: rgba(0, 0, 0, 0.4);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 14px;
+      color: #fff;
+      font-family: monospace;
+      font-size: 0.85rem;
+      resize: vertical;
+      margin-bottom: 16px;
+      outline: none;
+    }
+    textarea:focus { border-color: var(--accent); }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 12px 24px;
+      border-radius: 10px;
+      font-weight: 700;
+      font-size: 0.95rem;
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn-primary { background: linear-gradient(135deg, #6366f1, #4f46e5); color: #fff; width: 100%; }
+    .btn-primary:hover { background: linear-gradient(135deg, #4f46e5, #4338ca); }
+
+    /* Results */
+    #results { display: none; }
+    .score-banner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 24px;
+      margin-bottom: 24px;
+    }
+    .score-number {
+      font-size: 3rem;
+      font-weight: 800;
+      line-height: 1;
+    }
+    .score-good { color: var(--success); }
+    .score-warn { color: var(--warning); }
+    .score-bad { color: var(--danger); }
+
+    .result-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 20px;
+      margin-bottom: 16px;
+    }
+    .result-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+    .result-title { font-weight: 700; font-size: 1rem; }
+    .pill {
+      padding: 3px 10px;
+      border-radius: 9999px;
+      font-size: 0.75rem;
+      font-weight: 700;
+    }
+    .pill-pass { background: rgba(16, 185, 129, 0.15); color: var(--success); }
+    .pill-warn { background: rgba(245, 158, 11, 0.15); color: var(--warning); }
+    .pill-fail { background: rgba(239, 68, 68, 0.15); color: var(--danger); }
+    .result-val { color: var(--text-muted); font-size: 0.9rem; word-break: break-word; }
+
+    .upi-box {
+      margin-top: 40px;
+      background: rgba(17, 24, 39, 0.85);
+      border: 1px solid rgba(99, 102, 241, 0.3);
+      border-radius: 16px;
+      padding: 30px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <div class="badge">⚡ LaunchKit Tools</div>
+    <h1>Free Instant SEO & Meta Inspector</h1>
+    <p class="subtitle">Paste your page HTML or `&lt;head&gt;` tag below to instantly audit title length, meta description, OpenGraph preview tags, and heading hierarchy.</p>
+  </div>
+
+  <div class="container">
+    <div class="input-box">
+      <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+        <label style="font-weight: 600; font-size: 0.9rem;">Paste HTML Code or &lt;head&gt; section:</label>
+        <button onclick="loadSample()" style="background: none; border: none; color: #818cf8; cursor: pointer; font-size: 0.8rem; font-weight: 600;">Load Sample HTML</button>
+      </div>
+      <textarea id="htmlInput" placeholder="<html><head><title>My Awesome SaaS Product</title><meta name='description' content='Best product in the world.'>...</head><body>...</body></html>"></textarea>
+      <button class="btn btn-primary" onclick="runAudit()">Run Free Instant Audit →</button>
+    </div>
+
+    <!-- Results Section -->
+    <div id="results">
+      <div class="score-banner">
+        <div>
+          <div style="font-size: 0.85rem; text-transform: uppercase; color: var(--text-muted); font-weight: 700; margin-bottom: 4px;">Overall Health Score</div>
+          <div id="scoreText" style="font-size: 1.1rem; color: var(--text-muted);">Calculating...</div>
+        </div>
+        <div id="scoreNum" class="score-number score-good">100</div>
+      </div>
+
+      <div class="result-card">
+        <div class="result-header">
+          <div class="result-title">Title Tag</div>
+          <span id="titlePill" class="pill pill-pass">Pass</span>
+        </div>
+        <div id="titleContent" class="result-val">No title tag found.</div>
+      </div>
+
+      <div class="result-card">
+        <div class="result-header">
+          <div class="result-title">Meta Description</div>
+          <span id="descPill" class="pill pill-pass">Pass</span>
+        </div>
+        <div id="descContent" class="result-val">No meta description found.</div>
+      </div>
+
+      <div class="result-card">
+        <div class="result-header">
+          <div class="result-title">OpenGraph & Social Tags</div>
+          <span id="ogPill" class="pill pill-pass">Pass</span>
+        </div>
+        <div id="ogContent" class="result-val">Checking...</div>
+      </div>
+
+      <div class="result-card">
+        <div class="result-header">
+          <div class="result-title">Heading Structure (H1)</div>
+          <span id="h1Pill" class="pill pill-pass">Pass</span>
+        </div>
+        <div id="h1Content" class="result-val">Checking...</div>
+      </div>
+    </div>
+
+    <!-- Pro & Upgrades Banner -->
+    <div class="upi-box">
+      <div class="badge" style="background: rgba(16, 185, 129, 0.15); color: #10b981; border-color: rgba(16, 185, 129, 0.3);">Need a Full Website Overhaul?</div>
+      <h3 style="font-size: 1.6rem; margin-bottom: 8px;">We Build 100/100 SEO Landing Pages in 24 Hours</h3>
+      <p style="color: var(--text-muted); max-width: 600px; margin: 0 auto 20px; font-size: 0.95rem;">
+        Get a modern, mobile-responsive landing page with complete technical SEO, OpenGraph cards, and schema setup for <strong>₹2,499 INR ($49 USD)</strong>.
+      </p>
+      <a href="https://wa.me/917760171649?text=Hi%20Shashank,%20I%20used%20your%20SEO%20Inspector%20and%20want%20to%20order%20a%20landing%20page." target="_blank" class="btn btn-primary" style="max-width: 280px; margin: 0 auto; display: block; text-decoration: none;">💬 Order via WhatsApp →</a>
+    </div>
+  </div>
+
+  <script>
+    function loadSample() {
+      document.getElementById('htmlInput').value = `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Acme AI — Automated Workflow Intelligence for High-Growth Startups</title>
+  <meta name="description" content="Acme AI automates repetitive engineering and customer support workflows. Connect your API and start saving 20 hours per week today.">
+  <meta property="og:title" content="Acme AI — Workflow Intelligence">
+  <meta property="og:image" content="https://example.com/social-preview.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+  <h1>Transform Your Operational Efficiency with AI</h1>
+  <p>Ship faster with automated task distribution.</p>
+</body>
+</html>`;
+    }
+
+    function runAudit() {
+      const html = document.getElementById('htmlInput').value.trim();
+      if (!html) {
+        alert('Please paste your webpage HTML or click "Load Sample HTML"!');
+        return;
+      }
+
+      const parser = new DOMParser();
+      const doc = parser.parseFromString(html, 'text/html');
+
+      let score = 0;
+
+      // Title
+      const title = doc.querySelector('title')?.innerText || '';
+      const titlePill = document.getElementById('titlePill');
+      const titleContent = document.getElementById('titleContent');
+      if (!title) {
+        titlePill.className = 'pill pill-fail';
+        titlePill.innerText = 'Missing (0 pts)';
+        titleContent.innerText = 'No <title> tag found. Critical ranking flaw.';
+      } else if (title.length < 30) {
+        titlePill.className = 'pill pill-warn';
+        titlePill.innerText = 'Too Short';
+        titleContent.innerText = `"${title}" (${title.length} chars). Aim for 30–60 characters.`;
+        score += 15;
+      } else if (title.length > 65) {
+        titlePill.className = 'pill pill-warn';
+        titlePill.innerText = 'Too Long';
+        titleContent.innerText = `"${title}" (${title.length} chars). Title will get truncated in Google SERPs.`;
+        score += 20;
+      } else {
+        titlePill.className = 'pill pill-pass';
+        titlePill.innerText = 'Optimal';
+        titleContent.innerText = `"${title}" (${title.length} chars). Excellent length and keyword focus!`;
+        score += 30;
+      }
+
+      // Meta Description
+      const desc = doc.querySelector('meta[name="description"]')?.getAttribute('content') || '';
+      const descPill = document.getElementById('descPill');
+      const descContent = document.getElementById('descContent');
+      if (!desc) {
+        descPill.className = 'pill pill-fail';
+        descPill.innerText = 'Missing';
+        descContent.innerText = 'No meta description found. Google will pull random page text.';
+      } else if (desc.length < 90) {
+        descPill.className = 'pill pill-warn';
+        descPill.innerText = 'Too Short';
+        descContent.innerText = `"${desc}" (${desc.length} chars). Aim for 120–160 characters.`;
+        score += 15;
+      } else if (desc.length > 165) {
+        descPill.className = 'pill pill-warn';
+        descPill.innerText = 'Too Long';
+        descContent.innerText = `"${desc}" (${desc.length} chars). Gets truncated in mobile search.`;
+        score += 20;
+      } else {
+        descPill.className = 'pill pill-pass';
+        descPill.innerText = 'Optimal';
+        descContent.innerText = `"${desc}" (${desc.length} chars). Perfect length!`;
+        score += 30;
+      }
+
+      // Open Graph
+      const ogTitle = doc.querySelector('meta[property="og:title"]')?.getAttribute('content');
+      const ogImage = doc.querySelector('meta[property="og:image"]')?.getAttribute('content');
+      const ogPill = document.getElementById('ogPill');
+      const ogContent = document.getElementById('ogContent');
+      if (ogTitle && ogImage) {
+        ogPill.className = 'pill pill-pass';
+        ogPill.innerText = 'Complete';
+        ogContent.innerText = `og:title and og:image configured. Shared links will look great on WhatsApp & Twitter!`;
+        score += 20;
+      } else if (ogTitle || ogImage) {
+        ogPill.className = 'pill pill-warn';
+        ogPill.innerText = 'Incomplete';
+        ogContent.innerText = 'Missing either og:title or og:image tag.';
+        score += 10;
+      } else {
+        ogPill.className = 'pill pill-fail';
+        ogPill.innerText = 'Missing';
+        ogContent.innerText = 'No Open Graph tags found. Links will look plain and unbranded when shared.';
+      }
+
+      // H1
+      const h1s = doc.querySelectorAll('h1');
+      const h1Pill = document.getElementById('h1Pill');
+      const h1Content = document.getElementById('h1Content');
+      if (h1s.length === 1) {
+        h1Pill.className = 'pill pill-pass';
+        h1Pill.innerText = 'Optimal';
+        h1Content.innerText = `Single H1 found: "${h1s[0].innerText.trim()}"`;
+        score += 20;
+      } else if (h1s.length === 0) {
+        h1Pill.className = 'pill pill-fail';
+        h1Pill.innerText = 'Missing';
+        h1Content.innerText = 'No <h1> heading found on the page.';
+      } else {
+        h1Pill.className = 'pill pill-warn';
+        h1Pill.innerText = `${h1s.length} Found`;
+        h1Content.innerText = 'Multiple <h1> tags found. Best practice is exactly one per page.';
+        score += 10;
+      }
+
+      // Update Score
+      const scoreNum = document.getElementById('scoreNum');
+      const scoreText = document.getElementById('scoreText');
+      scoreNum.innerText = score;
+      if (score >= 80) {
+        scoreNum.className = 'score-number score-good';
+        scoreText.innerText = 'Strong SEO Health — Ready for Organic Traffic';
+      } else if (score >= 50) {
+        scoreNum.className = 'score-number score-warn';
+        scoreText.innerText = 'Moderate Health — Needs Key Fixes to Rank';
+      } else {
+        scoreNum.className = 'score-number score-bad';
+        scoreText.innerText = 'Poor Health — Major Penalties Detected';
+      }
+
+      document.getElementById('results').style.display = 'block';
+      document.getElementById('results').scrollIntoView({ behavior: 'smooth' });
+    }
+  </script>
+</body>
+</html>
