@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LaunchKit — 3 Premium Modern Landing Page Templates</title>
+  <meta name="description" content="Production-ready, standalone, lightning-fast landing page templates. Zero build steps, pure HTML/CSS, beautiful dark mode aesthetics." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #05070e;
+      --card-bg: rgba(17, 24, 39, 0.7);
+      --border: rgba(255, 255, 255, 0.08);
+      --accent: #6366f1;
+      --accent-glow: rgba(99, 102, 241, 0.25);
+      --text: #f3f4f6;
+      --text-muted: #9ca3af;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      background-image: 
+        radial-gradient(ellipse 80% 50% at 50% -20%, rgba(99, 102, 241, 0.15), transparent),
+        radial-gradient(circle at 80% 20%, rgba(139, 92, 246, 0.08), transparent);
+      line-height: 1.6;
+    }
+    header {
+      text-align: center;
+      padding: 80px 20px 40px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .badge {
+      display: inline-block;
+      padding: 6px 14px;
+      border-radius: 9999px;
+      background: rgba(99, 102, 241, 0.12);
+      border: 1px solid rgba(99, 102, 241, 0.3);
+      color: #818cf8;
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+    h1 {
+      font-size: clamp(2.2rem, 5vw, 3.8rem);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.15;
+      margin-bottom: 20px;
+      background: linear-gradient(135deg, #ffffff 40%, #a5b4fc 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    p.subtitle {
+      font-size: 1.2rem;
+      color: var(--text-muted);
+      max-width: 650px;
+      margin: 0 auto 30px;
+    }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px 20px 80px;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+      gap: 28px;
+      margin-bottom: 60px;
+    }
+    .card {
+      background: var(--card-bg);
+      backdrop-filter: blur(16px);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 32px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    .card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(99, 102, 241, 0.4);
+      box-shadow: 0 20px 40px -15px var(--accent-glow);
+    }
+    .card-tag {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: #818cf8;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 12px;
+    }
+    .card h2 {
+      font-size: 1.6rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+    .card p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      margin-bottom: 24px;
+      flex-grow: 1;
+    }
+    .features-list {
+      list-style: none;
+      margin-bottom: 28px;
+    }
+    .features-list li {
+      display: flex;
+      align-items: center;
+      font-size: 0.9rem;
+      color: #d1d5db;
+      margin-bottom: 8px;
+    }
+    .features-list li::before {
+      content: "✓";
+      color: #10b981;
+      font-weight: bold;
+      margin-right: 10px;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      width: 100%;
+      padding: 14px 20px;
+      border-radius: 12px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, #6366f1, #4f46e5);
+      color: #ffffff;
+      box-shadow: 0 4px 14px rgba(99, 102, 241, 0.35);
+      border: none;
+    }
+    .btn-primary:hover {
+      background: linear-gradient(135deg, #4f46e5, #4338ca);
+      transform: translateY(-1px);
+    }
+    .payment-box {
+      background: rgba(17, 24, 39, 0.9);
+      border: 1px solid rgba(99, 102, 241, 0.3);
+      border-radius: 20px;
+      padding: 40px;
+      max-width: 800px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    .payment-box h3 {
+      font-size: 1.8rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+    .crypto-addr {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      background: rgba(0, 0, 0, 0.5);
+      padding: 12px 20px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      font-family: monospace;
+      font-size: 0.9rem;
+      color: #a5b4fc;
+      margin: 20px auto;
+      max-width: 580px;
+      word-break: break-all;
+    }
+    .copy-btn {
+      background: #374151;
+      color: #fff;
+      border: none;
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 0.8rem;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+    .copy-btn:hover { background: #4b5563; }
+    footer {
+      text-align: center;
+      padding: 40px 20px;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      border-top: 1px solid var(--border);
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="badge">🚀 LaunchKit Showcase</div>
+    <h1>High-Converting Web Templates</h1>
+    <p class="subtitle">100% standalone, zero build dependencies, blazing fast, and designed to look like a million bucks. Ready for instant deployment.</p>
+  </header>
+
+  <div class="container">
+    <div class="grid">
+      <!-- Card 1: SaaS Landing Page -->
+      <div class="card">
+        <div>
+          <div class="card-tag">Template #1</div>
+          <h2>SaaS Landing Page</h2>
+          <p>The ultimate high-converting layout for software, apps, and micro-SaaS startups.</p>
+          <ul class="features-list">
+            <li>Gradient hero & interactive badge</li>
+            <li>Feature highlights & visual icon grid</li>
+            <li>Monthly/Annual pricing table toggle</li>
+            <li>Interactive FAQ accordion & testimonials</li>
+          </ul>
+        </div>
+        <a href="saas-landing.html" class="btn btn-primary" target="_blank">Live Interactive Demo →</a>
+      </div>
+
+      <!-- Card 2: Agency Showcase -->
+      <div class="card">
+        <div>
+          <div class="card-tag">Template #2</div>
+          <h2>Creative Agency</h2>
+          <p>A sleek, bold showcase for design studios, marketing agencies, and freelancers.</p>
+          <ul class="features-list">
+            <li>Case study showcase with hover animations</li>
+            <li>Service breakdown grid</li>
+            <li>Social proof stats & client logo wall</li>
+            <li>Interactive client inquiry contact form</li>
+          </ul>
+        </div>
+        <a href="agency-landing.html" class="btn btn-primary" target="_blank">Live Interactive Demo →</a>
+      </div>
+
+      <!-- Card 3: Developer Portfolio -->
+      <div class="card">
+        <div>
+          <div class="card-tag">Template #3</div>
+          <h2>Developer Portfolio</h2>
+          <p>Personal brand powerhouse for full-stack devs, AI engineers, and makers.</p>
+          <ul class="features-list">
+            <li>Interactive category project filters</li>
+            <li>Tech stack chips & experience timeline</li>
+            <li>Live availability status indicator</li>
+            <li>Direct collaboration contact card</li>
+          </ul>
+        </div>
+        <a href="portfolio-landing.html" class="btn btn-primary" target="_blank">Live Interactive Demo →</a>
+      </div>
+    </div>
+
+    <!-- Direct Support & Purchase Box -->
+    <div class="payment-box">
+      <h3>Direct License & Tip Jar</h3>
+      <p style="color: var(--text-muted); max-width: 600px; margin: 0 auto 16px;">
+        To purchase the full commercial bundle or support ongoing template development, send <strong>$39 USDC/USDT/ETH</strong> directly to our on-chain address:
+      </p>
+      <div class="crypto-addr">
+        <span id="addr">0x49e03383285eEef3927E12D88c1227f059BbD42d</span>
+        <button class="copy-btn" onclick="navigator.clipboard.writeText('0x49e03383285eEef3927E12D88c1227f059BbD42d'); this.innerText = 'Copied!'; setTimeout(() => this.innerText = 'Copy', 2000)">Copy</button>
+      </div>
+      <p style="font-size: 0.85rem; color: #6b7280;">Supports Base, Arbitrum, Optimism, Polygon, and Ethereum Mainnet</p>
+    </div>
+  </div>
+
+  <footer>
+    <p>© 2026 Shashank Karamudi. Open source templates. Built with Antigravity AI.</p>
+  </footer>
+</body>
+</html>

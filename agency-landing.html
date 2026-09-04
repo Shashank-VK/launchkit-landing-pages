@@ -1,0 +1,3067 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ÉLYSIEN & CO. — Haute Digital Studio & Creative Agency</title>
+  
+  <!-- Google Fonts: Playfair Display & Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400;1,600;1,700&display=swap" rel="stylesheet" />
+
+  <style>
+    /* -------------------------------------------------------------------------- */
+    /* CSS VARIABLES & RESET                                                      */
+    /* -------------------------------------------------------------------------- */
+    :root {
+      --bg-dark: #070709;
+      --bg-card: rgba(18, 18, 23, 0.75);
+      --bg-card-hover: rgba(26, 26, 34, 0.9);
+      --bg-surface: #0f0f14;
+      --bg-elevated: #16161f;
+      
+      --gold-primary: #d4af37;
+      --gold-light: #f5df88;
+      --gold-dark: #aa820a;
+      --gold-glow: rgba(212, 175, 55, 0.25);
+      --amber-accent: #f59e0b;
+      
+      --text-main: #f5f5f7;
+      --text-muted: #9ca3af;
+      --text-subtle: #6b7280;
+      
+      --border-subtle: rgba(212, 175, 55, 0.14);
+      --border-bright: rgba(212, 175, 55, 0.45);
+      
+      --font-serif: 'Playfair Display', Georgia, serif;
+      --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      
+      --transition-base: 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+      --transition-slow: 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      font-family: var(--font-sans);
+      font-size: 16px;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      background-image: 
+        radial-gradient(circle at 15% 20%, rgba(212, 175, 55, 0.04) 0%, transparent 40%),
+        radial-gradient(circle at 85% 65%, rgba(245, 158, 11, 0.03) 0%, transparent 45%),
+        radial-gradient(circle at 50% 90%, rgba(212, 175, 55, 0.03) 0%, transparent 50%);
+      background-attachment: fixed;
+      min-height: 100vh;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    ::selection {
+      background: var(--gold-primary);
+      color: #000;
+    }
+
+    /* -------------------------------------------------------------------------- */
+    /* TYPOGRAPHY UTILITIES                                                       */
+    /* -------------------------------------------------------------------------- */
+    h1, h2, h3, h4, .font-serif {
+      font-family: var(--font-serif);
+      font-weight: 700;
+      line-height: 1.15;
+      letter-spacing: -0.015em;
+    }
+
+    .gold-gradient-text {
+      background: linear-gradient(135deg, #fff7d6 0%, #d4af37 50%, #f59e0b 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      display: inline-block;
+    }
+
+    .gold-shimmer-text {
+      background: linear-gradient(90deg, #d4af37 0%, #fff 50%, #d4af37 100%);
+      background-size: 200% auto;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: shimmer 6s linear infinite;
+    }
+
+    @keyframes shimmer {
+      to { background-position: 200% center; }
+    }
+
+    .section-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--gold-primary);
+      padding: 0.35rem 1rem;
+      background: rgba(212, 175, 55, 0.08);
+      border: 1px solid var(--border-subtle);
+      border-radius: 9999px;
+      margin-bottom: 1.25rem;
+      backdrop-filter: blur(8px);
+    }
+
+    .section-tag::before {
+      content: "✦";
+      font-size: 0.65rem;
+      color: var(--amber-accent);
+    }
+
+    .section-heading {
+      font-size: clamp(2.2rem, 5vw, 3.8rem);
+      margin-bottom: 1.25rem;
+      color: var(--text-main);
+    }
+
+    .section-description {
+      font-size: clamp(1rem, 1.3vw, 1.15rem);
+      color: var(--text-muted);
+      max-width: 640px;
+      font-weight: 300;
+      line-height: 1.7;
+    }
+
+    /* -------------------------------------------------------------------------- */
+    /* LAYOUT & CONTAINERS                                                        */
+    /* -------------------------------------------------------------------------- */
+    .container {
+      width: 100%;
+      max-width: 1280px;
+      margin-left: auto;
+      margin-right: auto;
+      padding-left: 1.5rem;
+      padding-right: 1.5rem;
+    }
+
+    section {
+      padding: 7rem 0;
+      position: relative;
+    }
+
+    /* -------------------------------------------------------------------------- */
+    /* SCROLL PROGRESS INDICATOR & STICKY HEADER                                  */
+    /* -------------------------------------------------------------------------- */
+    #scroll-progress {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 3px;
+      width: 0%;
+      background: linear-gradient(90deg, #d4af37, #f5df88, #f59e0b);
+      z-index: 1000;
+      box-shadow: 0 0 10px rgba(212, 175, 55, 0.7);
+      transition: width 0.05s ease-out;
+    }
+
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 900;
+      padding: 1.35rem 0;
+      transition: all var(--transition-base);
+      background: transparent;
+    }
+
+    .navbar.scrolled {
+      padding: 0.9rem 0;
+      background: rgba(7, 7, 9, 0.88);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border-subtle);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    }
+
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .brand-logo {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      text-decoration: none;
+      color: var(--text-main);
+    }
+
+    .brand-logo-icon {
+      width: 34px;
+      height: 34px;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .brand-logo-icon svg {
+      width: 100%;
+      height: 100%;
+      fill: none;
+      stroke: var(--gold-primary);
+      stroke-width: 1.5;
+      filter: drop-shadow(0 0 6px rgba(212, 175, 55, 0.4));
+      transition: transform var(--transition-base);
+    }
+
+    .brand-logo:hover .brand-logo-icon svg {
+      transform: rotate(45deg);
+    }
+
+    .brand-title {
+      font-family: var(--font-serif);
+      font-size: 1.4rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      color: #fff;
+    }
+
+    .brand-title span {
+      color: var(--gold-primary);
+    }
+
+    .nav-links {
+      display: none;
+      align-items: center;
+      gap: 2.25rem;
+      list-style: none;
+    }
+
+    @media (min-width: 900px) {
+      .nav-links {
+        display: flex;
+      }
+    }
+
+    .nav-link {
+      font-size: 0.88rem;
+      font-weight: 500;
+      color: var(--text-muted);
+      text-decoration: none;
+      letter-spacing: 0.03em;
+      position: relative;
+      padding: 0.25rem 0;
+      transition: color var(--transition-base);
+    }
+
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 1.5px;
+      background: var(--gold-primary);
+      box-shadow: 0 0 8px var(--gold-primary);
+      transition: width var(--transition-base);
+    }
+
+    .nav-link:hover, .nav-link.active {
+      color: #fff;
+    }
+
+    .nav-link:hover::after, .nav-link.active::after {
+      width: 100%;
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .nav-cta-desktop {
+      display: none;
+    }
+
+    @media (min-width: 768px) {
+      .nav-cta-desktop {
+        display: inline-flex;
+      }
+    }
+
+    /* Mobile Hamburger */
+    .mobile-menu-btn {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 5px;
+      width: 38px;
+      height: 38px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border-subtle);
+      border-radius: 8px;
+      cursor: pointer;
+      padding: 8px;
+      z-index: 1001;
+      transition: all var(--transition-base);
+    }
+
+    .mobile-menu-btn span {
+      display: block;
+      width: 100%;
+      height: 2px;
+      background: var(--gold-primary);
+      border-radius: 2px;
+      transition: all 0.3s ease;
+    }
+
+    .mobile-menu-btn.active span:nth-child(1) {
+      transform: translateY(7px) rotate(45deg);
+    }
+
+    .mobile-menu-btn.active span:nth-child(2) {
+      opacity: 0;
+    }
+
+    .mobile-menu-btn.active span:nth-child(3) {
+      transform: translateY(-7px) rotate(-45deg);
+    }
+
+    @media (min-width: 900px) {
+      .mobile-menu-btn {
+        display: none;
+      }
+    }
+
+    /* Mobile Drawer */
+    .mobile-drawer {
+      position: fixed;
+      top: 0;
+      right: -100%;
+      width: 100%;
+      max-width: 380px;
+      height: 100vh;
+      background: #0d0d12;
+      border-left: 1px solid var(--border-subtle);
+      z-index: 999;
+      padding: 6rem 2.5rem 3rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: right var(--transition-slow);
+      box-shadow: -20px 0 50px rgba(0, 0, 0, 0.8);
+    }
+
+    .mobile-drawer.open {
+      right: 0;
+    }
+
+    .mobile-nav-links {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 1.75rem;
+    }
+
+    .mobile-nav-link {
+      font-family: var(--font-serif);
+      font-size: 1.75rem;
+      color: var(--text-main);
+      text-decoration: none;
+      transition: color var(--transition-base);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .mobile-nav-link:hover {
+      color: var(--gold-primary);
+    }
+
+    .drawer-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(4px);
+      z-index: 998;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity var(--transition-base);
+    }
+
+    .drawer-overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    /* -------------------------------------------------------------------------- */
+    /* BUTTONS                                                                    */
+    /* -------------------------------------------------------------------------- */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.65rem;
+      font-size: 0.88rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      padding: 0.85rem 1.85rem;
+      border-radius: 9999px;
+      text-decoration: none;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      transition: all var(--transition-base);
+      border: 1px solid transparent;
+      white-space: nowrap;
+    }
+
+    .btn-gold {
+      background: linear-gradient(135deg, #d4af37 0%, #c59b27 50%, #997516 100%);
+      color: #0a0a0d;
+      box-shadow: 0 4px 20px rgba(212, 175, 55, 0.25), inset 0 1px 1px rgba(255, 255, 255, 0.4);
+    }
+
+    .btn-gold:hover {
+      background: linear-gradient(135deg, #f5df88 0%, #d4af37 50%, #aa820a 100%);
+      box-shadow: 0 6px 30px rgba(212, 175, 55, 0.5), inset 0 1px 2px rgba(255, 255, 255, 0.6);
+      transform: translateY(-2px);
+    }
+
+    .btn-outline-gold {
+      background: rgba(212, 175, 55, 0.05);
+      border-color: var(--border-bright);
+      color: var(--gold-light);
+      backdrop-filter: blur(10px);
+    }
+
+    .btn-outline-gold:hover {
+      background: rgba(212, 175, 55, 0.15);
+      border-color: var(--gold-primary);
+      color: #ffffff;
+      box-shadow: 0 0 25px rgba(212, 175, 55, 0.25);
+      transform: translateY(-2px);
+    }
+
+    .btn-arrow svg {
+      width: 16px;
+      height: 16px;
+      transition: transform var(--transition-base);
+    }
+
+    .btn:hover .btn-arrow svg {
+      transform: translateX(4px);
+    }
+
+    /* -------------------------------------------------------------------------- */
+    /* HERO SECTION                                                               */
+    /* -------------------------------------------------------------------------- */
+    .hero-section {
+      min-height: 100vh;
+      min-height: 100dvh;
+      display: flex;
+      align-items: center;
+      position: relative;
+      padding-top: 6rem;
+      padding-bottom: 4rem;
+      overflow: hidden;
+    }
+
+    #hero-canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+      opacity: 0.65;
+    }
+
+    .hero-bg-orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(120px);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .hero-orb-1 {
+      top: 15%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 500px;
+      height: 350px;
+      background: radial-gradient(circle, rgba(212, 175, 55, 0.15) 0%, transparent 70%);
+      animation: pulseOrb 10s ease-in-out infinite alternate;
+    }
+
+    .hero-orb-2 {
+      bottom: 10%;
+      right: 10%;
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(circle, rgba(245, 158, 11, 0.08) 0%, transparent 70%);
+      animation: pulseOrb 14s ease-in-out infinite alternate-reverse;
+    }
+
+    @keyframes pulseOrb {
+      0% { opacity: 0.4; transform: scale(0.9) translate(-50%, 0); }
+      100% { opacity: 0.9; transform: scale(1.15) translate(-45%, -20px); }
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 960px;
+      margin: 0 auto;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .hero-headline {
+      font-size: clamp(2.8rem, 6.5vw, 5.4rem);
+      font-weight: 700;
+      line-height: 1.08;
+      letter-spacing: -0.025em;
+      margin-top: 1.5rem;
+      margin-bottom: 1.75rem;
+      color: #ffffff;
+    }
+
+    /* Animated text reveal */
+    .reveal-words span {
+      display: inline-block;
+      opacity: 0;
+      transform: translateY(35px) rotate(1.5deg);
+      animation: revealWord 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    .reveal-words span:nth-child(1) { animation-delay: 0.1s; }
+    .reveal-words span:nth-child(2) { animation-delay: 0.25s; }
+    .reveal-words span:nth-child(3) { animation-delay: 0.4s; }
+    .reveal-words span:nth-child(4) { animation-delay: 0.55s; }
+    .reveal-words span:nth-child(5) { animation-delay: 0.7s; }
+    .reveal-words span:nth-child(6) { animation-delay: 0.85s; }
+
+    @keyframes revealWord {
+      to {
+        opacity: 1;
+        transform: translateY(0) rotate(0deg);
+      }
+    }
+
+    .hero-subtext {
+      font-size: clamp(1.05rem, 1.6vw, 1.3rem);
+      color: var(--text-muted);
+      max-width: 680px;
+      margin-bottom: 2.75rem;
+      font-weight: 300;
+      line-height: 1.75;
+      opacity: 0;
+      animation: fadeIn 1s ease 0.9s forwards;
+    }
+
+    .hero-cta-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.25rem;
+      justify-content: center;
+      opacity: 0;
+      animation: fadeIn 1s ease 1.1s forwards;
+    }
+
+    @keyframes fadeIn {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Hero stats bar */
+    .hero-stats {
+      margin-top: 4.5rem;
+      padding-top: 2.5rem;
+      border-top: 1px solid var(--border-subtle);
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2rem 1.5rem;
+      width: 100%;
+      max-width: 900px;
+      opacity: 0;
+      animation: fadeIn 1s ease 1.3s forwards;
+    }
+
+    @media (min-width: 768px) {
+      .hero-stats {
+        grid-template-columns: repeat(4, 1fr);
+      }
+    }
+
+    .stat-item {
+      text-align: center;
+      position: relative;
+    }
+
+    .stat-number {
+      font-family: var(--font-serif);
+      font-size: clamp(2rem, 3.2vw, 2.75rem);
+      font-weight: 700;
+      color: var(--gold-light);
+      line-height: 1;
+      margin-bottom: 0.4rem;
+    }
+
+    .stat-label {
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--text-subtle);
+      font-weight: 500;
+    }
+
+    /* Scroll Indicator */
+    .scroll-indicator {
+      position: absolute;
+      bottom: 1.75rem;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--text-subtle);
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: color var(--transition-base);
+      z-index: 5;
+    }
+
+    .scroll-indicator:hover {
+      color: var(--gold-primary);
+    }
+
+    .mouse-icon {
+      width: 20px;
+      height: 32px;
+      border: 1.5px solid rgba(212, 175, 55, 0.4);
+      border-radius: 12px;
+      position: relative;
+    }
+
+    .mouse-wheel {
+      width: 3px;
+      height: 6px;
+      background: var(--gold-primary);
+      border-radius: 2px;
+      position: absolute;
+      top: 6px;
+      left: 50%;
+      transform: translateX(-50%);
+      animation: mouseScroll 2s infinite ease-in-out;
+    }
+
+    @keyframes mouseScroll {
+      0% { opacity: 1; transform: translate(-50%, 0); }
+      80% { opacity: 0; transform: translate(-50%, 12px); }
+      100% { opacity: 0; transform: translate(-50%, 0); }
+    }
+
+    /* -------------------------------------------------------------------------- */
+    /* LOGO TICKER / CLIENTS                                                      */
+    /* -------------------------------------------------------------------------- */
+    .ticker-section {
+      padding: 2.5rem 0;
+      border-top: 1px solid rgba(212, 175, 55, 0.08);
+      border-bottom: 1px solid rgba(212, 175, 55, 0.08);
+      background: rgba(10, 10, 14, 0.6);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .ticker-track {
+      display: flex;
+      width: calc(250px * 14);
+      animation: tickerScroll 32s linear infinite;
+    }
+
+    .ticker-track:hover {
+      animation-play-state: paused;
+    }
+
+    @keyframes tickerScroll {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(calc(-250px * 7)); }
+    }
+
+    .ticker-item {
+      width: 250px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.6rem;
+      color: var(--text-subtle);
+      font-family: var(--font-serif);
+      font-size: 1.15rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      opacity: 0.55;
+      transition: all var(--transition-base);
+    }
+
+    .ticker-item:hover {
+      opacity: 1;
+      color: var(--gold-light);
+      filter: drop-shadow(0 0 8px rgba(212, 175, 55, 0.3));
+    }
+
+    .ticker-item svg {
+      width: 20px;
+      height: 20px;
+      fill: currentColor;
+    }
+
+    /* -------------------------------------------------------------------------- */
+    /* PORTFOLIO SECTION & FILTER                                                 */
+    /* -------------------------------------------------------------------------- */
+    .portfolio-header-wrap {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 3.5rem;
+      gap: 2rem;
+    }
+
+    @media (min-width: 768px) {
+      .portfolio-header-wrap {
+        flex-direction: row;
+        align-items: flex-end;
+      }
+    }
+
+    .portfolio-filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .filter-btn {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(212, 175, 55, 0.15);
+      color: var(--text-muted);
+      padding: 0.5rem 1.25rem;
+      border-radius: 9999px;
+      font-size: 0.82rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all var(--transition-base);
+    }
+
+    .filter-btn:hover {
+      border-color: var(--gold-primary);
+      color: #fff;
+    }
+
+    .filter-btn.active {
+      background: var(--gold-primary);
+      color: #070709;
+      border-color: var(--gold-primary);
+      font-weight: 600;
+      box-shadow: 0 4px 15px rgba(212, 175, 55, 0.35);
+    }
+
+    .portfolio-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+
+    @media (min-width: 640px) {
+      .portfolio-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (min-width: 1024px) {
+      .portfolio-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    .project-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 16px;
+      overflow: hidden;
+      cursor: pointer;
+      position: relative;
+      transition: all var(--transition-base);
+      display: flex;
+      flex-direction: column;
+      backdrop-filter: blur(12px);
+    }
+
+    .project-card:hover {
+      border-color: var(--border-bright);
+      transform: translateY(-8px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6), 0 0 30px rgba(212, 175, 55, 0.12);
+    }
+
+    .project-card.hidden {
+      display: none;
+    }
+
+    .card-media-wrapper {
+      position: relative;
+      width: 100%;
+      height: 280px;
+      overflow: hidden;
+      background: #111116;
+    }
+
+    .card-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform var(--transition-slow);
+    }
+
+    .project-card:hover .card-img {
+      transform: scale(1.08);
+    }
+
+    .card-gradient-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(7, 7, 9, 0.1) 0%, rgba(7, 7, 9, 0.75) 100%);
+      pointer-events: none;
+    }
+
+    .card-hover-badge {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -40%);
+      opacity: 0;
+      transition: all var(--transition-base);
+      pointer-events: none;
+    }
+
+    .project-card:hover .card-hover-badge {
+      opacity: 1;
+      transform: translate(-50%, -50%);
+    }
+
+    .view-pill {
+      background: rgba(18, 18, 23, 0.85);
+      border: 1px solid var(--gold-primary);
+      color: var(--gold-light);
+      padding: 0.6rem 1.3rem;
+      border-radius: 9999px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      backdrop-filter: blur(8px);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6), 0 0 15px rgba(212, 175, 55, 0.3);
+    }
+
+    .card-category-tag {
+      position: absolute;
+      top: 1rem;
+      left: 1rem;
+      background: rgba(7, 7, 9, 0.75);
+      border: 1px solid var(--border-subtle);
+      color: var(--gold-light);
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0.25rem 0.75rem;
+      border-radius: 9999px;
+      backdrop-filter: blur(8px);
+      z-index: 2;
+    }
+
+    .card-details {
+      padding: 1.75rem;
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+      justify-content: space-between;
+    }
+
+    .card-client {
+      font-size: 0.75rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text-subtle);
+      margin-bottom: 0.4rem;
+    }
+
+    .card-title {
+      font-size: 1.35rem;
+      color: #ffffff;
+      margin-bottom: 0.75rem;
+      transition: color var(--transition-base);
+    }
+
+    .project-card:hover .card-title {
+      color: var(--gold-light);
+    }
+
+    .card-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+      padding-top: 1rem;
+      margin-top: 1rem;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .card-year {
+      font-family: var(--font-serif);
+      color: var(--gold-primary);
+    }
+
+    /* -------------------------------------------------------------------------- */
+    /* SERVICES SECTION                                                           */
+    /* -------------------------------------------------------------------------- */
+    .services-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.75rem;
+    }
+
+    @media (min-width: 640px) {
+      .services-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (min-width: 1024px) {
+      .services-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    .service-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 20px;
+      padding: 2.5rem 2rem;
+      position: relative;
+      transition: all var(--transition-base);
+      overflow: hidden;
+      backdrop-filter: blur(12px);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .service-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, var(--gold-primary), transparent);
+      opacity: 0;
+      transition: opacity var(--transition-base);
+    }
+
+    .service-card:hover {
+      background: var(--bg-card-hover);
+      border-color: var(--border-bright);
+      transform: translateY(-6px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5), 0 0 25px rgba(212, 175, 55, 0.1);
+    }
+
+    .service-card:hover::before {
+      opacity: 1;
+    }
+
+    .service-icon-box {
+      width: 58px;
+      height: 58px;
+      border-radius: 14px;
+      background: rgba(212, 175, 55, 0.07);
+      border: 1px solid var(--border-subtle);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1.75rem;
+      transition: all var(--transition-base);
+    }
+
+    .service-card:hover .service-icon-box {
+      background: var(--gold-primary);
+      box-shadow: 0 0 20px rgba(212, 175, 55, 0.4);
+      transform: scale(1.05) rotate(3deg);
+    }
+
+    .service-icon-box svg {
+      width: 28px;
+      height: 28px;
+      stroke: var(--gold-primary);
+      stroke-width: 1.6;
+      fill: none;
+      transition: stroke var(--transition-base);
+    }
+
+    .service-card:hover .service-icon-box svg {
+      stroke: #070709;
+    }
+
+    .service-num {
+      position: absolute;
+      top: 1.75rem;
+      right: 2rem;
+      font-family: var(--font-serif);
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: rgba(212, 175, 55, 0.25);
+    }
+
+    .service-title {
+      font-size: 1.4rem;
+      margin-bottom: 1rem;
+      color: #ffffff;
+    }
+
+    .service-desc {
+      font-size: 0.92rem;
+      color: var(--text-muted);
+      font-weight: 300;
+      line-height: 1.65;
+      margin-bottom: 1.5rem;
+    }
+
+    .service-deliverables {
+      list-style: none;
+      margin-bottom: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .service-deliverables li {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .service-deliverables li::before {
+      content: "✦";
+      font-size: 0.55rem;
+      color: var(--gold-primary);
+    }
+
+    .service-link {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--gold-light);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: gap var(--transition-base);
+    }
+
+    .service-link:hover {
+      gap: 0.75rem;
+      color: #ffffff;
+    }
+
+    /* -------------------------------------------------------------------------- */
+    /* TEAM SECTION                                                               */
+    /* -------------------------------------------------------------------------- */
+    .team-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2.25rem;
+    }
+
+    @media (min-width: 640px) {
+      .team-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (min-width: 1024px) {
+      .team-grid {
+        grid-template-columns: repeat(4, 1fr);
+      }
+    }
+
+    .team-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 20px;
+      padding: 2.5rem 1.75rem;
+      text-align: center;
+      position: relative;
+      transition: all var(--transition-base);
+      backdrop-filter: blur(12px);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .team-card:hover {
+      border-color: var(--border-bright);
+      transform: translateY(-8px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6), 0 0 25px rgba(212, 175, 55, 0.15);
+    }
+
+    .avatar-wrapper {
+      position: relative;
+      width: 130px;
+      height: 130px;
+      margin-bottom: 1.5rem;
+    }
+
+    .avatar-halo {
+      position: absolute;
+      inset: -6px;
+      border-radius: 50%;
+      border: 1.5px dashed var(--gold-primary);
+      opacity: 0.4;
+      transition: all var(--transition-slow);
+    }
+
+    .team-card:hover .avatar-halo {
+      transform: rotate(180deg) scale(1.06);
+      opacity: 0.9;
+      border-style: solid;
+      box-shadow: 0 0 20px rgba(212, 175, 55, 0.4);
+    }
+
+    .avatar-placeholder {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      background: #191922;
+      position: relative;
+      overflow: hidden;
+      border: 2px solid var(--border-bright);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .avatar-placeholder img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: grayscale(85%) contrast(110%);
+      transition: filter var(--transition-base), transform var(--transition-base);
+    }
+
+    .team-card:hover .avatar-placeholder img {
+      filter: grayscale(0%) contrast(100%);
+      transform: scale(1.06);
+    }
+
+    .team-name {
+      font-size: 1.28rem;
+      color: #ffffff;
+      margin-bottom: 0.35rem;
+    }
+
+    .team-role {
+      font-size: 0.78rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--gold-primary);
+      font-weight: 600;
+      margin-bottom: 0.9rem;
+    }
+
+    .team-bio {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      font-weight: 300;
+      line-height: 1.6;
+      margin-bottom: 1.25rem;
+    }
+
+    .team-socials {
+      display: flex;
+      gap: 0.75rem;
+      margin-top: auto;
+    }
+
+    .social-btn {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      transition: all var(--transition-base);
+    }
+
+    .social-btn svg {
+      width: 14px;
+      height: 14px;
+      fill: currentColor;
+    }
+
+    .social-btn:hover {
+      background: var(--gold-primary);
+      border-color: var(--gold-primary);
+      color: #070709;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3);
+    }
+
+    /* -------------------------------------------------------------------------- */
+    /* PROCESS & PHILOSOPHY SECTION                                               */
+    /* -------------------------------------------------------------------------- */
+    .process-timeline {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+      margin-top: 3.5rem;
+    }
+
+    @media (min-width: 768px) {
+      .process-timeline {
+        grid-template-columns: repeat(4, 1fr);
+      }
+    }
+
+    .process-step {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 18px;
+      padding: 2rem 1.5rem;
+      position: relative;
+      transition: all var(--transition-base);
+    }
+
+    .process-step:hover {
+      border-color: var(--gold-primary);
+      transform: translateY(-4px);
+    }
+
+    .step-badge {
+      font-family: var(--font-serif);
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: var(--gold-light);
+      margin-bottom: 0.75rem;
+      display: block;
+      opacity: 0.85;
+    }
+
+    .step-title {
+      font-size: 1.15rem;
+      color: #ffffff;
+      margin-bottom: 0.6rem;
+    }
+
+    .step-desc {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    /* -------------------------------------------------------------------------- */
+    /* CONTACT SECTION                                                            */
+    /* -------------------------------------------------------------------------- */
+    .contact-container {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 3.5rem;
+      background: linear-gradient(135deg, rgba(18, 18, 23, 0.85) 0%, rgba(12, 12, 16, 0.95) 100%);
+      border: 1px solid var(--border-bright);
+      border-radius: 28px;
+      padding: 3rem 2rem;
+      box-shadow: 0 30px 60px rgba(0, 0, 0, 0.7), 0 0 40px rgba(212, 175, 55, 0.1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    @media (min-width: 1024px) {
+      .contact-container {
+        grid-template-columns: 1fr 1.25fr;
+        padding: 4.5rem;
+      }
+    }
+
+    .contact-info-col {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .contact-perks {
+      margin: 2rem 0;
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+
+    .contact-perk-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+    }
+
+    .contact-perk-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      background: rgba(212, 175, 55, 0.1);
+      border: 1px solid var(--border-subtle);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--gold-primary);
+      flex-shrink: 0;
+    }
+
+    .contact-perk-title {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: #fff;
+      margin-bottom: 0.2rem;
+    }
+
+    .contact-perk-sub {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+    }
+
+    .office-locations {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--border-subtle);
+    }
+
+    .location-card {
+      font-size: 0.82rem;
+    }
+
+    .location-city {
+      font-weight: 600;
+      color: var(--gold-light);
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    .location-time {
+      color: var(--text-subtle);
+      font-size: 0.75rem;
+    }
+
+    /* Contact Form Elements */
+    .contact-form {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .form-group-row {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.25rem;
+    }
+
+    @media (min-width: 640px) {
+      .form-group-row {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    .form-field {
+      display: flex;
+      flex-direction: column;
+      gap: 0.45rem;
+    }
+
+    .form-label {
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: var(--text-muted);
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .form-input, .form-textarea, .form-select {
+      background: rgba(7, 7, 10, 0.65);
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+      padding: 0.95rem 1.25rem;
+      font-size: 0.95rem;
+      color: #ffffff;
+      font-family: var(--font-sans);
+      outline: none;
+      transition: all var(--transition-base);
+      width: 100%;
+    }
+
+    .form-input:focus, .form-textarea:focus, .form-select:focus {
+      border-color: var(--gold-primary);
+      background: rgba(12, 12, 18, 0.9);
+      box-shadow: 0 0 15px rgba(212, 175, 55, 0.25);
+    }
+
+    .form-input::placeholder, .form-textarea::placeholder {
+      color: var(--text-subtle);
+    }
+
+    .form-textarea {
+      resize: vertical;
+      min-height: 120px;
+    }
+
+    .budget-selector-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+
+    .budget-pills {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.6rem;
+    }
+
+    .budget-pill {
+      position: relative;
+    }
+
+    .budget-pill input {
+      position: absolute;
+      opacity: 0;
+      cursor: pointer;
+    }
+
+    .budget-pill label {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.65rem 0.5rem;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border-subtle);
+      border-radius: 10px;
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all var(--transition-base);
+      text-align: center;
+    }
+
+    .budget-pill input:checked + label {
+      background: rgba(212, 175, 55, 0.15);
+      border-color: var(--gold-primary);
+      color: var(--gold-light);
+      font-weight: 600;
+      box-shadow: 0 0 12px rgba(212, 175, 55, 0.2);
+    }
+
+    /* Form feedback message */
+    .form-feedback {
+      display: none;
+      padding: 1.25rem;
+      border-radius: 12px;
+      background: rgba(212, 175, 55, 0.1);
+      border: 1px solid var(--gold-primary);
+      color: var(--gold-light);
+      font-size: 0.9rem;
+      text-align: center;
+      animation: fadeIn 0.4s ease;
+    }
+
+    .form-feedback.success {
+      display: block;
+    }
+
+    /* -------------------------------------------------------------------------- */
+    /* FOOTER                                                                     */
+    /* -------------------------------------------------------------------------- */
+    .site-footer {
+      border-top: 1px solid var(--border-subtle);
+      background: #050507;
+      padding: 5rem 0 2.5rem;
+      position: relative;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 3rem;
+      margin-bottom: 4rem;
+    }
+
+    @media (min-width: 768px) {
+      .footer-grid {
+        grid-template-columns: 1.8fr repeat(3, 1fr);
+      }
+    }
+
+    .footer-brand p {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin-top: 1rem;
+      max-width: 320px;
+      line-height: 1.65;
+    }
+
+    .footer-col-title {
+      font-family: var(--font-serif);
+      font-size: 1.15rem;
+      color: #fff;
+      margin-bottom: 1.25rem;
+    }
+
+    .footer-links {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .footer-link {
+      color: var(--text-muted);
+      font-size: 0.88rem;
+      text-decoration: none;
+      transition: color var(--transition-base);
+    }
+
+    .footer-link:hover {
+      color: var(--gold-primary);
+    }
+
+    .footer-bottom {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.5rem;
+      padding-top: 2rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      font-size: 0.82rem;
+      color: var(--text-subtle);
+    }
+
+    @media (min-width: 768px) {
+      .footer-bottom {
+        flex-direction: row;
+      }
+    }
+
+    .back-to-top {
+      background: rgba(212, 175, 55, 0.08);
+      border: 1px solid var(--border-subtle);
+      color: var(--gold-light);
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all var(--transition-base);
+    }
+
+    .back-to-top:hover {
+      background: var(--gold-primary);
+      color: #070709;
+      transform: translateY(-3px);
+      box-shadow: 0 4px 15px rgba(212, 175, 55, 0.4);
+    }
+
+    /* -------------------------------------------------------------------------- */
+    /* INTERSECTION OBSERVER ANIMATIONS                                          */
+    /* -------------------------------------------------------------------------- */
+    .reveal {
+      opacity: 0;
+      transform: translateY(35px);
+      transition: opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1), transform 0.85s cubic-bezier(0.16, 1, 0.3, 1);
+      will-change: opacity, transform;
+    }
+
+    .reveal.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .reveal-delay-1 { transition-delay: 0.15s; }
+    .reveal-delay-2 { transition-delay: 0.3s; }
+    .reveal-delay-3 { transition-delay: 0.45s; }
+    .reveal-delay-4 { transition-delay: 0.6s; }
+
+    /* -------------------------------------------------------------------------- */
+    /* MODAL FOR PROJECT CASE STUDY PREVIEW                                       */
+    /* -------------------------------------------------------------------------- */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(3, 3, 5, 0.88);
+      backdrop-filter: blur(12px);
+      z-index: 2000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity var(--transition-base);
+    }
+
+    .modal-backdrop.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .modal-box {
+      background: #101017;
+      border: 1px solid var(--border-bright);
+      border-radius: 24px;
+      max-width: 840px;
+      width: 100%;
+      max-height: 90vh;
+      overflow-y: auto;
+      position: relative;
+      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.9), 0 0 50px rgba(212, 175, 55, 0.2);
+      transform: scale(0.94) translateY(20px);
+      transition: transform var(--transition-base);
+    }
+
+    .modal-backdrop.open .modal-box {
+      transform: scale(1) translateY(0);
+    }
+
+    .modal-close-btn {
+      position: absolute;
+      top: 1.25rem;
+      right: 1.25rem;
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid var(--border-subtle);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 10;
+      transition: all var(--transition-base);
+    }
+
+    .modal-close-btn:hover {
+      background: var(--gold-primary);
+      color: #000;
+      transform: rotate(90deg);
+    }
+
+    .modal-media {
+      width: 100%;
+      height: 360px;
+      background: #181822;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .modal-media img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .modal-body {
+      padding: 2.5rem;
+    }
+
+    .modal-tag {
+      color: var(--gold-primary);
+      font-size: 0.75rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+
+    .modal-title {
+      font-size: 2.2rem;
+      margin-bottom: 1.25rem;
+      color: #fff;
+    }
+
+    .modal-specs {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      padding: 1.25rem 0;
+      margin-bottom: 1.75rem;
+      border-top: 1px solid var(--border-subtle);
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .spec-item {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .spec-label {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--text-subtle);
+    }
+
+    .spec-val {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--gold-light);
+    }
+
+    .modal-text {
+      color: var(--text-muted);
+      line-height: 1.75;
+      font-size: 1rem;
+      margin-bottom: 2rem;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- SCROLL PROGRESS BAR -->
+  <div id="scroll-progress" aria-hidden="true"></div>
+
+  <!-- NAVIGATION -->
+  <header class="navbar" id="navbar">
+    <div class="container">
+      <div class="nav-inner">
+        <!-- Logo -->
+        <a href="#hero" class="brand-logo" aria-label="ÉLYSIEN Home">
+          <div class="brand-logo-icon">
+            <svg viewBox="0 0 40 40">
+              <polygon points="20,2 38,20 20,38 2,20" />
+              <circle cx="20" cy="20" r="6" fill="var(--gold-primary)" />
+            </svg>
+          </div>
+          <span class="brand-title">ÉLYSIEN<span>.</span></span>
+        </a>
+
+        <!-- Desktop Nav Links -->
+        <nav>
+          <ul class="nav-links">
+            <li><a href="#portfolio" class="nav-link">Portfolio</a></li>
+            <li><a href="#services" class="nav-link">Expertise</a></li>
+            <li><a href="#philosophy" class="nav-link">Philosophy</a></li>
+            <li><a href="#team" class="nav-link">Leadership</a></li>
+            <li><a href="#contact" class="nav-link">Inquire</a></li>
+          </ul>
+        </nav>
+
+        <!-- Actions -->
+        <div class="nav-actions">
+          <a href="#contact" class="btn btn-gold nav-cta-desktop">
+            <span>Initiate Brief</span>
+            <span class="btn-arrow">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </span>
+          </a>
+          <button class="mobile-menu-btn" id="mobile-menu-toggle" aria-label="Toggle Navigation Menu">
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- MOBILE NAVIGATION DRAWER -->
+  <div class="drawer-overlay" id="drawer-overlay"></div>
+  <aside class="mobile-drawer" id="mobile-drawer" aria-label="Mobile Navigation">
+    <div>
+      <div style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 3rem;">
+        <span class="brand-title">ÉLYSIEN<span>.</span></span>
+      </div>
+      <ul class="mobile-nav-links">
+        <li><a href="#portfolio" class="mobile-nav-link">Portfolio <span>↗</span></a></li>
+        <li><a href="#services" class="mobile-nav-link">Expertise <span>↗</span></a></li>
+        <li><a href="#philosophy" class="mobile-nav-link">Philosophy <span>↗</span></a></li>
+        <li><a href="#team" class="mobile-nav-link">Leadership <span>↗</span></a></li>
+        <li><a href="#contact" class="mobile-nav-link">Inquire <span>↗</span></a></li>
+      </ul>
+    </div>
+    <div>
+      <a href="#contact" class="btn btn-gold" style="width: 100%; text-align: center; margin-bottom: 1.5rem;">Start a Commission</a>
+      <p style="font-size: 0.75rem; color: var(--text-subtle); text-align: center; letter-spacing: 0.05em;">PARIS — NEW YORK — TOKYO</p>
+    </div>
+  </aside>
+
+  <!-- ========================================================================= -->
+  <!-- HERO SECTION                                                              -->
+  <!-- ========================================================================= -->
+  <section class="hero-section" id="hero">
+    <!-- Ambient glowing orbs -->
+    <div class="hero-bg-orb hero-orb-1"></div>
+    <div class="hero-bg-orb hero-orb-2"></div>
+    <!-- Interactive constellation canvas -->
+    <canvas id="hero-canvas"></canvas>
+
+    <div class="container" style="position: relative; z-index: 2;">
+      <div class="hero-content">
+        <div class="section-tag reveal">
+          Haute Digital Studio & Creative Agency
+        </div>
+
+        <h1 class="hero-headline reveal-words">
+          <span>Crafting</span> <span>Iconic</span> <span>Legacies</span> <br />
+          <span>for</span> <span class="gold-gradient-text">Visionary</span> <span class="gold-gradient-text">Brands.</span>
+        </h1>
+
+        <p class="hero-subtext">
+          We orchestrate digital couture experiences, timeless brand identities, and immersive multi-sensory campaigns for enterprises that refuse to be ordinary.
+        </p>
+
+        <div class="hero-cta-group">
+          <a href="#portfolio" class="btn btn-gold">
+            <span>Explore Selected Works</span>
+            <span class="btn-arrow">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </span>
+          </a>
+          <a href="#contact" class="btn btn-outline-gold">
+            <span>Book Private Consultation</span>
+          </a>
+        </div>
+
+        <!-- Key Metrics Strip -->
+        <div class="hero-stats">
+          <div class="stat-item">
+            <div class="stat-number" data-target="48" data-suffix="+">0</div>
+            <div class="stat-label">Global Design Awards</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number" data-target="14" data-suffix=" Yrs">0</div>
+            <div class="stat-label">Bespoke Mastery</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number" data-target="99" data-suffix=".4%">0</div>
+            <div class="stat-label">Client Retention</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number" data-target="3" data-prefix="$" data-suffix=".2B+">0</div>
+            <div class="stat-label">Market Value Created</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mouse Scroll Down indicator -->
+    <a href="#portfolio" class="scroll-indicator" aria-label="Scroll to Portfolio">
+      <div class="mouse-icon">
+        <div class="mouse-wheel"></div>
+      </div>
+      <span>Discover</span>
+    </a>
+  </section>
+
+  <!-- ========================================================================= -->
+  <!-- CLIENT MARQUEE TICKER                                                     -->
+  <!-- ========================================================================= -->
+  <div class="ticker-section" aria-hidden="true">
+    <div class="ticker-track">
+      <!-- Set 1 -->
+      <div class="ticker-item">
+        <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        VOGUE LUXE
+      </div>
+      <div class="ticker-item">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/></svg>
+        ASTON & CO.
+      </div>
+      <div class="ticker-item">
+        <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+        VALENTI PARFUM
+      </div>
+      <div class="ticker-item">
+        <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/></svg>
+        MONOLITH AI
+      </div>
+      <div class="ticker-item">
+        <svg viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+        ÉTOILE SWISS
+      </div>
+      <div class="ticker-item">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M8 12h8"/></svg>
+        AURELIA AUTOMOTIVE
+      </div>
+      <div class="ticker-item">
+        <svg viewBox="0 0 24 24"><polygon points="6 2 18 2 18 6 6 6"/><rect x="3" y="6" width="18" height="16" rx="2"/></svg>
+        MAISON VELOUR
+      </div>
+
+      <!-- Set 2 (Duplicate for seamless loop) -->
+      <div class="ticker-item">
+        <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        VOGUE LUXE
+      </div>
+      <div class="ticker-item">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/></svg>
+        ASTON & CO.
+      </div>
+      <div class="ticker-item">
+        <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+        VALENTI PARFUM
+      </div>
+      <div class="ticker-item">
+        <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/></svg>
+        MONOLITH AI
+      </div>
+      <div class="ticker-item">
+        <svg viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+        ÉTOILE SWISS
+      </div>
+      <div class="ticker-item">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M8 12h8"/></svg>
+        AURELIA AUTOMOTIVE
+      </div>
+      <div class="ticker-item">
+        <svg viewBox="0 0 24 24"><polygon points="6 2 18 2 18 6 6 6"/><rect x="3" y="6" width="18" height="16" rx="2"/></svg>
+        MAISON VELOUR
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- PORTFOLIO / WORK SHOWCASE                                                 -->
+  <!-- ========================================================================= -->
+  <section id="portfolio">
+    <div class="container">
+      <div class="portfolio-header-wrap">
+        <div>
+          <div class="section-tag reveal">Curated Archive</div>
+          <h2 class="section-heading reveal reveal-delay-1">Selected <span class="gold-gradient-text">Masterpieces</span></h2>
+          <p class="section-description reveal reveal-delay-2">
+            A showcase of digital platforms, sovereign brand universes, and multidimensional art direction crafted for industry titans.
+          </p>
+        </div>
+
+        <!-- Filter buttons -->
+        <div class="portfolio-filters reveal reveal-delay-3" role="tablist">
+          <button class="filter-btn active" data-filter="all">All Disciplines</button>
+          <button class="filter-btn" data-filter="digital">Digital Haute</button>
+          <button class="filter-btn" data-filter="branding">Brand Identity</button>
+          <button class="filter-btn" data-filter="immersive">Spatial & 3D</button>
+        </div>
+      </div>
+
+      <!-- Projects Grid -->
+      <div class="portfolio-grid" id="portfolio-grid">
+        
+        <!-- Project 1 -->
+        <article class="project-card reveal reveal-delay-1" data-category="digital" 
+          data-modal-title="L'Orangerie Privée — Interactive Flagship"
+          data-modal-category="Digital Haute Experience"
+          data-modal-client="Maison Valenti"
+          data-modal-year="2025"
+          data-modal-discipline="WebGL 3D, Headless Commerce"
+          data-modal-desc="An immersive e-commerce sanctuary engineered for a centuries-old Parisian fragrance house. Features interactive real-time olfactory visualizations, 3D bottle customization, and frictionless haute checkout experience."
+          data-modal-img="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=1200&auto=format&fit=crop">
+          <div class="card-media-wrapper">
+            <span class="card-category-tag">Digital Haute</span>
+            <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=800&auto=format&fit=crop" alt="L'Orangerie Privée" class="card-img" loading="lazy" />
+            <div class="card-gradient-overlay"></div>
+            <div class="card-hover-badge">
+              <span class="view-pill">Explore Case Study ↗</span>
+            </div>
+          </div>
+          <div class="card-details">
+            <div>
+              <span class="card-client">Maison Valenti Paris</span>
+              <h3 class="card-title font-serif">L'Orangerie Privée</h3>
+            </div>
+            <div class="card-meta">
+              <span>Interactive Flagship</span>
+              <span class="card-year">2025</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Project 2 -->
+        <article class="project-card reveal reveal-delay-2" data-category="branding"
+          data-modal-title="Aurelia Hypercar — Autonomous Identity"
+          data-modal-category="Brand Architecture"
+          data-modal-client="Aurelia Automotive"
+          data-modal-year="2024"
+          data-modal-discipline="Brand System, Typography, Sound Design"
+          data-modal-desc="Complete brand metamorphosis for Monaco's luxury electric hypercar manufacturer. Includes sovereign typography design, custom gold-alloy metallic badging, in-cabin HUD visual architecture, and a global launch narrative."
+          data-modal-img="https://images.unsplash.com/photo-1617788138017-80ad40651399?q=80&w=1200&auto=format&fit=crop">
+          <div class="card-media-wrapper">
+            <span class="card-category-tag">Brand Identity</span>
+            <img src="https://images.unsplash.com/photo-1617788138017-80ad40651399?q=80&w=800&auto=format&fit=crop" alt="Aurelia Hypercar" class="card-img" loading="lazy" />
+            <div class="card-gradient-overlay"></div>
+            <div class="card-hover-badge">
+              <span class="view-pill">Explore Case Study ↗</span>
+            </div>
+          </div>
+          <div class="card-details">
+            <div>
+              <span class="card-client">Aurelia Automotive</span>
+              <h3 class="card-title font-serif">Aurelia Sovereign</h3>
+            </div>
+            <div class="card-meta">
+              <span>Hypercar Brand Ecosystem</span>
+              <span class="card-year">2024</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Project 3 -->
+        <article class="project-card reveal reveal-delay-3" data-category="immersive"
+          data-modal-title="Chronos 1892 — Virtual Horology Pavilion"
+          data-modal-category="Spatial & 3D Immersion"
+          data-modal-client="Étoile Swiss Haute Horlogerie"
+          data-modal-year="2025"
+          data-modal-discipline="Unreal Engine 5, WebGPU, Spatial Audio"
+          data-modal-desc="A high-fidelity virtual pavilion allowing high-net-worth collectors worldwide to dismantle and examine high-complication tourbillon timepieces down to sub-micron gear mechanics in real-time WebGPU."
+          data-modal-img="https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?q=80&w=1200&auto=format&fit=crop">
+          <div class="card-media-wrapper">
+            <span class="card-category-tag">Spatial & 3D</span>
+            <img src="https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?q=80&w=800&auto=format&fit=crop" alt="Chronos 1892" class="card-img" loading="lazy" />
+            <div class="card-gradient-overlay"></div>
+            <div class="card-hover-badge">
+              <span class="view-pill">Explore Case Study ↗</span>
+            </div>
+          </div>
+          <div class="card-details">
+            <div>
+              <span class="card-client">Étoile Swiss Watches</span>
+              <h3 class="card-title font-serif">Chronos 1892 Pavilion</h3>
+            </div>
+            <div class="card-meta">
+              <span>Spatial Horology Experience</span>
+              <span class="card-year">2025</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Project 4 -->
+        <article class="project-card reveal reveal-delay-1" data-category="digital"
+          data-modal-title="Nocturne Fine Dining — Sensory Booking"
+          data-modal-category="Digital Haute"
+          data-modal-client="L'Hôtel Royal Tokyo"
+          data-modal-year="2024"
+          data-modal-discipline="Interactive Web, Motion Direction"
+          data-modal-desc="A cinematic digital reservation and culinary journey for a 3-Michelin-star omakase sanctuary in Ginza. Implemented ambient seasonal lighting shifts aligned with Tokyo sunset times."
+          data-modal-img="https://images.unsplash.com/photo-1578474846511-04ba529f0b88?q=80&w=1200&auto=format&fit=crop">
+          <div class="card-media-wrapper">
+            <span class="card-category-tag">Digital Haute</span>
+            <img src="https://images.unsplash.com/photo-1578474846511-04ba529f0b88?q=80&w=800&auto=format&fit=crop" alt="Nocturne Fine Dining" class="card-img" loading="lazy" />
+            <div class="card-gradient-overlay"></div>
+            <div class="card-hover-badge">
+              <span class="view-pill">Explore Case Study ↗</span>
+            </div>
+          </div>
+          <div class="card-details">
+            <div>
+              <span class="card-client">L'Hôtel Royal Tokyo</span>
+              <h3 class="card-title font-serif">Nocturne Gastronomie</h3>
+            </div>
+            <div class="card-meta">
+              <span>Sensory Booking Platform</span>
+              <span class="card-year">2024</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Project 5 -->
+        <article class="project-card reveal reveal-delay-2" data-category="branding"
+          data-modal-title="Velour & Silk — Editorial Rebrand"
+          data-modal-category="Brand Identity"
+          data-modal-client="Maison Velour Milano"
+          data-modal-year="2025"
+          data-modal-discipline="Art Direction, Packaging, Editorial Design"
+          data-modal-desc="Revitalizing a legacy Milanese couture fashion house for the next century of patrons. Crafted gold-embossed tactile packaging, custom editorial typography, and high-fashion campaign film."
+          data-modal-img="https://images.unsplash.com/photo-1509631179647-0177331693ae?q=80&w=1200&auto=format&fit=crop">
+          <div class="card-media-wrapper">
+            <span class="card-category-tag">Brand Identity</span>
+            <img src="https://images.unsplash.com/photo-1509631179647-0177331693ae?q=80&w=800&auto=format&fit=crop" alt="Velour & Silk" class="card-img" loading="lazy" />
+            <div class="card-gradient-overlay"></div>
+            <div class="card-hover-badge">
+              <span class="view-pill">Explore Case Study ↗</span>
+            </div>
+          </div>
+          <div class="card-details">
+            <div>
+              <span class="card-client">Maison Velour Milano</span>
+              <h3 class="card-title font-serif">Velour Couture</h3>
+            </div>
+            <div class="card-meta">
+              <span>Editorial Campaign & Packaging</span>
+              <span class="card-year">2025</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Project 6 -->
+        <article class="project-card reveal reveal-delay-3" data-category="immersive"
+          data-modal-title="Monolith Intelligence — Spatial Holographic Terminal"
+          data-modal-category="Spatial & 3D"
+          data-modal-client="Monolith AI Manhattan"
+          data-modal-year="2024"
+          data-modal-discipline="Three.js, GLSL Shaders, Generative UI"
+          data-modal-desc="An avant-garde generative data interface for quantum machine learning clusters. Rendered over 200,000 live data nodes in 60fps golden particle swarms with tactile haptic soundscapes."
+          data-modal-img="https://images.unsplash.com/photo-1634017839464-5c339ebe3cb4?q=80&w=1200&auto=format&fit=crop">
+          <div class="card-media-wrapper">
+            <span class="card-category-tag">Spatial & 3D</span>
+            <img src="https://images.unsplash.com/photo-1634017839464-5c339ebe3cb4?q=80&w=800&auto=format&fit=crop" alt="Monolith Intelligence" class="card-img" loading="lazy" />
+            <div class="card-gradient-overlay"></div>
+            <div class="card-hover-badge">
+              <span class="view-pill">Explore Case Study ↗</span>
+            </div>
+          </div>
+          <div class="card-details">
+            <div>
+              <span class="card-client">Monolith AI Manhattan</span>
+              <h3 class="card-title font-serif">Neural Monolith</h3>
+            </div>
+            <div class="card-meta">
+              <span>Generative Data Terminal</span>
+              <span class="card-year">2024</span>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================================= -->
+  <!-- SERVICES SECTION                                                          -->
+  <!-- ========================================================================= -->
+  <section id="services" style="background: rgba(10, 10, 14, 0.4);">
+    <div class="container">
+      <div style="text-align: center; max-width: 720px; margin: 0 auto 4.5rem;">
+        <div class="section-tag reveal">Disciplines of Distinction</div>
+        <h2 class="section-heading reveal reveal-delay-1">Architects of <span class="gold-gradient-text">Pure Prestige</span></h2>
+        <p class="section-description reveal reveal-delay-2" style="margin: 0 auto;">
+          We bridge aesthetic sublimity with technical supremacy, delivering bespoke digital ecosystems that transform market perception.
+        </p>
+      </div>
+
+      <div class="services-grid">
+        
+        <!-- Service 1 -->
+        <div class="service-card reveal reveal-delay-1">
+          <div>
+            <span class="service-num">01</span>
+            <div class="service-icon-box">
+              <svg viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+            </div>
+            <h3 class="service-title font-serif">Brand Architecture & Sovereign Identity</h3>
+            <p class="service-desc">
+              Holistic visual universes, custom bespoke typography, tonal strategy, and authoritative design standards built for generational endurance.
+            </p>
+            <ul class="service-deliverables">
+              <li>Comprehensive Brand Guidelines</li>
+              <li>Custom Haute Typography & Logomarks</li>
+              <li>Packaging & Tactile Collateral</li>
+              <li>Tone of Voice & Narrative Strategy</li>
+            </ul>
+          </div>
+          <a href="#contact" class="service-link">Commission Branding <span>→</span></a>
+        </div>
+
+        <!-- Service 2 -->
+        <div class="service-card reveal reveal-delay-2">
+          <div>
+            <span class="service-num">02</span>
+            <div class="service-icon-box">
+              <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+            </div>
+            <h3 class="service-title font-serif">Haute Digital Platforms & Web Experiences</h3>
+            <p class="service-desc">
+              High-performance, ultra-responsive digital flagships crafted with millimeter precision, flawless micro-interactions, and bespoke UI architecture.
+            </p>
+            <ul class="service-deliverables">
+              <li>Headless E-Commerce Solutions</li>
+              <li>Custom Interactive Web Experiences</li>
+              <li>Design Systems & Micro-Animations</li>
+              <li>Global Edge CDN & Core Web Vitals 99+</li>
+            </ul>
+          </div>
+          <a href="#contact" class="service-link">Build Digital Flagship <span>→</span></a>
+        </div>
+
+        <!-- Service 3 -->
+        <div class="service-card reveal reveal-delay-3">
+          <div>
+            <span class="service-num">03</span>
+            <div class="service-icon-box">
+              <svg viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
+            </div>
+            <h3 class="service-title font-serif">Spatial 3D, WebGL & Interactive Realities</h3>
+            <p class="service-desc">
+              Mesmerizing three-dimensional product configurators, virtual showrooms, and real-time shader experiences rendered right in the browser.
+            </p>
+            <ul class="service-deliverables">
+              <li>Three.js & WebGPU Real-time Rendering</li>
+              <li>3D Product Virtualization</li>
+              <li>Interactive Virtual Showrooms</li>
+              <li>Generative Particle Physics</li>
+            </ul>
+          </div>
+          <a href="#contact" class="service-link">Explore Spatial 3D <span>→</span></a>
+        </div>
+
+        <!-- Service 4 -->
+        <div class="service-card reveal reveal-delay-1">
+          <div>
+            <span class="service-num">04</span>
+            <div class="service-icon-box">
+              <svg viewBox="0 0 24 24"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
+            </div>
+            <h3 class="service-title font-serif">Art Direction & Cinematic Motion</h3>
+            <p class="service-desc">
+              Editorial-grade campaign imagery, high-concept 3D motion choreography, and cinematic product films that command international fascination.
+            </p>
+            <ul class="service-deliverables">
+              <li>High-Fashion Editorial Direction</li>
+              <li>3D Product Motion Renders</li>
+              <li>Brand Manifesto Films</li>
+              <li>Social Couture Vignettes</li>
+            </ul>
+          </div>
+          <a href="#contact" class="service-link">Commission Direction <span>→</span></a>
+        </div>
+
+        <!-- Service 5 -->
+        <div class="service-card reveal reveal-delay-2">
+          <div>
+            <span class="service-num">05</span>
+            <div class="service-icon-box">
+              <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
+            </div>
+            <h3 class="service-title font-serif">Couture Campaign Strategy & Launch</h3>
+            <p class="service-desc">
+              High-impact market entry strategies, VIP launch activations, and bespoke digital PR that position your brand at the pinnacle of luxury.
+            </p>
+            <ul class="service-deliverables">
+              <li>Global Product Launch Roadmaps</li>
+              <li>Private VIP Digital Previews</li>
+              <li>Influential Editorial Placements</li>
+              <li>Multi-Channel Story Arcs</li>
+            </ul>
+          </div>
+          <a href="#contact" class="service-link">Plan Campaign <span>→</span></a>
+        </div>
+
+        <!-- Service 6 -->
+        <div class="service-card reveal reveal-delay-3">
+          <div>
+            <span class="service-num">06</span>
+            <div class="service-icon-box">
+              <svg viewBox="0 0 24 24"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+            </div>
+            <h3 class="service-title font-serif">Sonic Branding & Acoustic Identity</h3>
+            <p class="service-desc">
+              Signature audio logos, tactile UI haptic sound design, and bespoke musical scores that elevate the sensory depth of your digital presence.
+            </p>
+            <ul class="service-deliverables">
+              <li>Signature Brand Soundmarks</li>
+              <li>Micro-Interaction Audio UI</li>
+              <li>Atmospheric Spatial Soundscapes</li>
+              <li>Film Score Composition</li>
+            </ul>
+          </div>
+          <a href="#contact" class="service-link">Compose Sonic Identity <span>→</span></a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================================= -->
+  <!-- PHILOSOPHY / PROCESS TIMELINE                                             -->
+  <!-- ========================================================================= -->
+  <section id="philosophy">
+    <div class="container">
+      <div style="display: grid; grid-template-columns: 1fr; gap: 3rem; align-items: center; margin-bottom: 4rem;">
+        <div>
+          <div class="section-tag reveal">The Method</div>
+          <h2 class="section-heading reveal reveal-delay-1">Where Discretion Meets <br /><span class="gold-gradient-text">Uncompromising Artistry</span></h2>
+          <p class="section-description reveal reveal-delay-2">
+            True luxury is not loud; it is unforgettable. We accept a maximum of 12 client commissions per calendar year to dedicate obsessive focus to every pixel, curve, and line of code.
+          </p>
+        </div>
+      </div>
+
+      <div class="process-timeline">
+        <!-- Step 1 -->
+        <div class="process-step reveal reveal-delay-1">
+          <span class="step-badge">01</span>
+          <h3 class="step-title font-serif">Immersion & Archetype</h3>
+          <p class="step-desc">
+            We deconstruct the brand DNA, historical heritage, and competitive landscape to discover your authentic sovereign narrative.
+          </p>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="process-step reveal reveal-delay-2">
+          <span class="step-badge">02</span>
+          <h3 class="step-title font-serif">Creative Architecture</h3>
+          <p class="step-desc">
+            We develop comprehensive aesthetic concepts, interactive prototypes, design systems, and bespoke typography specimens.
+          </p>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="process-step reveal reveal-delay-3">
+          <span class="step-badge">03</span>
+          <h3 class="step-title font-serif">Artisanal Engineering</h3>
+          <p class="step-desc">
+            Pixel-perfect implementation with WebGL shaders, fluid motion curves, headless architecture, and uncompromising quality tests.
+          </p>
+        </div>
+
+        <!-- Step 4 -->
+        <div class="process-step reveal reveal-delay-4">
+          <span class="step-badge">04</span>
+          <h3 class="step-title font-serif">Global Elevation</h3>
+          <p class="step-desc">
+            Coordinated global unveiling, high-performance infrastructure orchestration, and continuous strategic advisory.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================================= -->
+  <!-- LEADERSHIP / TEAM SECTION                                                 -->
+  <!-- ========================================================================= -->
+  <section id="team" style="background: rgba(10, 10, 14, 0.4);">
+    <div class="container">
+      <div style="text-align: center; max-width: 680px; margin: 0 auto 4.5rem;">
+        <div class="section-tag reveal">Creative Leadership</div>
+        <h2 class="section-heading reveal reveal-delay-1">Masters of <span class="gold-gradient-text">The Craft</span></h2>
+        <p class="section-description reveal reveal-delay-2" style="margin: 0 auto;">
+          An elite ensemble of visionary art directors, code artisans, and luxury strategists hailing from Paris, Tokyo, and New York.
+        </p>
+      </div>
+
+      <div class="team-grid">
+        
+        <!-- Member 1 -->
+        <div class="team-card reveal reveal-delay-1">
+          <div class="avatar-wrapper">
+            <div class="avatar-halo"></div>
+            <div class="avatar-placeholder">
+              <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=400&auto=format&fit=crop" alt="Éléonore de Saint-Germain" loading="lazy" />
+            </div>
+          </div>
+          <h3 class="team-name font-serif">Éléonore de Saint-Germain</h3>
+          <div class="team-role">Founding Principal & Creative Director</div>
+          <p class="team-bio">
+            Former Head of Art for Paris luxury fashion dynasties. 16+ years pioneering sensorial digital narratives.
+          </p>
+          <div class="team-socials">
+            <a href="#" class="social-btn" aria-label="LinkedIn"><svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg></a>
+            <a href="#" class="social-btn" aria-label="Twitter"><svg viewBox="0 0 24 24"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"/></svg></a>
+            <a href="#" class="social-btn" aria-label="Dribbble"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M19.13 5.09C15.22 9.14 10 10.44 2.25 10.94"/><path d="M21.75 12.84c-6.62-1.41-12.14 1-16.38 6.32"/><path d="M8.56 2.75c4.37 6 6 9.42 8 17.72"/></svg></a>
+          </div>
+        </div>
+
+        <!-- Member 2 -->
+        <div class="team-card reveal reveal-delay-2">
+          <div class="avatar-wrapper">
+            <div class="avatar-halo"></div>
+            <div class="avatar-placeholder">
+              <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=400&auto=format&fit=crop" alt="Kenjiro Takahashi" loading="lazy" />
+            </div>
+          </div>
+          <h3 class="team-name font-serif">Kenjiro Takahashi</h3>
+          <div class="team-role">Head of Interactive & WebGL</div>
+          <p class="team-bio">
+            Pioneering creative technologist and shader architect specializing in real-time browser physics and WebGPU graphics.
+          </p>
+          <div class="team-socials">
+            <a href="#" class="social-btn" aria-label="LinkedIn"><svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg></a>
+            <a href="#" class="social-btn" aria-label="GitHub"><svg viewBox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg></a>
+            <a href="#" class="social-btn" aria-label="Twitter"><svg viewBox="0 0 24 24"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"/></svg></a>
+          </div>
+        </div>
+
+        <!-- Member 3 -->
+        <div class="team-card reveal reveal-delay-3">
+          <div class="avatar-wrapper">
+            <div class="avatar-halo"></div>
+            <div class="avatar-placeholder">
+              <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=400&auto=format&fit=crop" alt="Soraya Al-Mansoor" loading="lazy" />
+            </div>
+          </div>
+          <h3 class="team-name font-serif">Soraya Al-Mansoor</h3>
+          <div class="team-role">Head of Brand Architecture</div>
+          <p class="team-bio">
+            Sovereign brand strategist crafting multi-billion dollar identities for luxury automotive, private aviation, and real estate.
+          </p>
+          <div class="team-socials">
+            <a href="#" class="social-btn" aria-label="LinkedIn"><svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg></a>
+            <a href="#" class="social-btn" aria-label="Instagram"><svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+            <a href="#" class="social-btn" aria-label="Dribbble"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M19.13 5.09C15.22 9.14 10 10.44 2.25 10.94"/><path d="M21.75 12.84c-6.62-1.41-12.14 1-16.38 6.32"/><path d="M8.56 2.75c4.37 6 6 9.42 8 17.72"/></svg></a>
+          </div>
+        </div>
+
+        <!-- Member 4 -->
+        <div class="team-card reveal reveal-delay-4">
+          <div class="avatar-wrapper">
+            <div class="avatar-halo"></div>
+            <div class="avatar-placeholder">
+              <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=400&auto=format&fit=crop" alt="Julian Vance" loading="lazy" />
+            </div>
+          </div>
+          <h3 class="team-name font-serif">Julian Vance</h3>
+          <div class="team-role">Director of Spatial & 3D Design</div>
+          <p class="team-bio">
+            Visual alchemist blending photoreal lighting, cinematic CGI art direction, and sculptural virtual architecture.
+          </p>
+          <div class="team-socials">
+            <a href="#" class="social-btn" aria-label="LinkedIn"><svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg></a>
+            <a href="#" class="social-btn" aria-label="Behance"><svg viewBox="0 0 24 24"><path d="M2 18h5a4 4 0 0 0 4-4 3.5 3.5 0 0 0-2.5-3.3A3.5 3.5 0 0 0 10 4H2v14zm3-11h4a1.5 1.5 0 0 1 0 3H5V7zm0 5h4.5a1.5 1.5 0 0 1 0 3H5v-3zM14 10h7v1.5h-7zm0 5.5c0 1.9 1.6 3.5 3.5 3.5s3.5-1.6 3.5-3.5v-.5h-7v.5z"/></svg></a>
+            <a href="#" class="social-btn" aria-label="Twitter"><svg viewBox="0 0 24 24"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"/></svg></a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================================= -->
+  <!-- CONTACT SECTION                                                           -->
+  <!-- ========================================================================= -->
+  <section id="contact">
+    <div class="container">
+      <div class="contact-container reveal">
+        
+        <!-- Left Info Column -->
+        <div class="contact-info-col">
+          <div>
+            <div class="section-tag">Private Commission</div>
+            <h2 class="section-heading" style="font-size: clamp(2rem, 4vw, 3.2rem);">
+              Initiate Your <br /><span class="gold-gradient-text">Transformation</span>
+            </h2>
+            <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.7; font-weight: 300;">
+              We partner with selected brands to build defining digital landmarks. Please share your project details and timeline.
+            </p>
+
+            <div class="contact-perks">
+              <div class="contact-perk-item">
+                <div class="contact-perk-icon">✦</div>
+                <div>
+                  <div class="contact-perk-title">Strict Discretion & NDA</div>
+                  <div class="contact-perk-sub">Absolute confidentiality for all preliminary briefings.</div>
+                </div>
+              </div>
+              <div class="contact-perk-item">
+                <div class="contact-perk-icon">⏱</div>
+                <div>
+                  <div class="contact-perk-title">24-Hour Executive Review</div>
+                  <div class="contact-perk-sub">Direct response from our Founding Creative Director.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="office-locations">
+            <div class="location-card">
+              <div class="location-city"><span>●</span> Paris</div>
+              <div class="location-time">8 Place Vendôme, 75001</div>
+            </div>
+            <div class="location-card">
+              <div class="location-city"><span>●</span> New York</div>
+              <div class="location-time">432 Park Avenue, NY 10022</div>
+            </div>
+            <div class="location-card">
+              <div class="location-city"><span>●</span> Tokyo</div>
+              <div class="location-time">Ginza Six Tower, Tokyo 104</div>
+            </div>
+            <div class="location-card">
+              <div class="location-city"><span>●</span> Direct Inquiries</div>
+              <div class="location-time">concierge@elysien-studio.com</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Form Column -->
+        <div>
+          <form class="contact-form" id="agency-contact-form">
+            <div class="form-group-row">
+              <div class="form-field">
+                <label class="form-label" for="client-name">Your Full Name *</label>
+                <input type="text" id="client-name" class="form-input" placeholder="e.g. Victoria de Rothschild" required />
+              </div>
+              <div class="form-field">
+                <label class="form-label" for="client-email">Direct Work Email *</label>
+                <input type="email" id="client-email" class="form-input" placeholder="name@enterprise.com" required />
+              </div>
+            </div>
+
+            <div class="form-group-row">
+              <div class="form-field">
+                <label class="form-label" for="client-company">Organization / Brand *</label>
+                <input type="text" id="client-company" class="form-input" placeholder="Maison, Studio, or Enterprise" required />
+              </div>
+              <div class="form-field">
+                <label class="form-label" for="client-discipline">Primary Discipline</label>
+                <select id="client-discipline" class="form-select">
+                  <option value="holistic">Full Brand & Digital Metamorphosis</option>
+                  <option value="digital">Haute Web Experience / E-Commerce</option>
+                  <option value="branding">Brand Architecture & Sovereign Identity</option>
+                  <option value="spatial">Spatial 3D & Virtual Showroom</option>
+                  <option value="direction">Art Direction & Campaign Film</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Budget Level Selector -->
+            <div class="budget-selector-group">
+              <label class="form-label">Estimated Investment Scope</label>
+              <div class="budget-pills">
+                <div class="budget-pill">
+                  <input type="radio" name="budget" id="b1" value="$30k - $60k" checked />
+                  <label for="b1">$30k – $60k</label>
+                </div>
+                <div class="budget-pill">
+                  <input type="radio" name="budget" id="b2" value="$60k - $120k" />
+                  <label for="b2">$60k – $120k</label>
+                </div>
+                <div class="budget-pill">
+                  <input type="radio" name="budget" id="b3" value="$120k+" />
+                  <label for="b3">$120k+ Tier</label>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-field">
+              <label class="form-label" for="client-message">Brief Summary of Vision *</label>
+              <textarea id="client-message" class="form-textarea" placeholder="Describe the aspirations, timelines, and sovereign goals for this commission..." required></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-gold" style="width: 100%; padding: 1.1rem; font-size: 0.95rem;">
+              <span>Transmit Executive Brief</span>
+              <span class="btn-arrow">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              </span>
+            </button>
+
+            <!-- Feedback Confirmation -->
+            <div class="form-feedback" id="form-feedback">
+              ✦ Commission received. Our Founding Director will review your brief within 24 business hours.
+            </div>
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================================================================= -->
+  <!-- FOOTER                                                                    -->
+  <!-- ========================================================================= -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        
+        <div class="footer-brand">
+          <a href="#hero" class="brand-logo" style="margin-bottom: 1rem;">
+            <div class="brand-logo-icon">
+              <svg viewBox="0 0 40 40">
+                <polygon points="20,2 38,20 20,38 2,20" />
+                <circle cx="20" cy="20" r="6" fill="var(--gold-primary)" />
+              </svg>
+            </div>
+            <span class="brand-title">ÉLYSIEN<span>.</span></span>
+          </a>
+          <p>
+            An independent haute digital design practice orchestrating sovereign identities and award-winning digital experiences worldwide.
+          </p>
+        </div>
+
+        <div>
+          <h4 class="footer-col-title">Navigation</h4>
+          <ul class="footer-links">
+            <li><a href="#portfolio" class="footer-link">Curated Archive</a></li>
+            <li><a href="#services" class="footer-link">Disciplines</a></li>
+            <li><a href="#philosophy" class="footer-link">The Method</a></li>
+            <li><a href="#team" class="footer-link">Leadership</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="footer-col-title">Salons</h4>
+          <ul class="footer-links">
+            <li><span style="color: #fff;">Paris</span> — Place Vendôme</li>
+            <li><span style="color: #fff;">New York</span> — Park Ave</li>
+            <li><span style="color: #fff;">Tokyo</span> — Ginza Six</li>
+            <li><span style="color: #fff;">London</span> — Mayfair</li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="footer-col-title">Private Inquiries</h4>
+          <ul class="footer-links">
+            <li><a href="mailto:concierge@elysien-studio.com" class="footer-link">concierge@elysien.com</a></li>
+            <li><a href="tel:+33140000000" class="footer-link">+33 (0)1 42 68 00 00</a></li>
+            <li><span style="color: var(--gold-light); font-size: 0.8rem;">● Accepting Q3/Q4 Briefs</span></li>
+          </ul>
+        </div>
+
+      </div>
+
+      <div class="footer-bottom">
+        <div>
+          © 2026 ÉLYSIEN & CO. ALL RIGHTS RESERVED. CRAFTED FOR VISIONARY BRANDS.
+        </div>
+        <div style="display: flex; align-items: center; gap: 2rem;">
+          <a href="#" class="footer-link">Privacy Codex</a>
+          <a href="#" class="footer-link">Terms of Engagement</a>
+          <button class="back-to-top" id="back-to-top-btn" aria-label="Return to Top">↑</button>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ========================================================================= -->
+  <!-- PROJECT CASE STUDY MODAL                                                  -->
+  <!-- ========================================================================= -->
+  <div class="modal-backdrop" id="project-modal" aria-hidden="true" role="dialog">
+    <div class="modal-box">
+      <button class="modal-close-btn" id="modal-close" aria-label="Close Project Modal">✕</button>
+      <div class="modal-media">
+        <img id="modal-img" src="" alt="" />
+      </div>
+      <div class="modal-body">
+        <div class="modal-tag" id="modal-category">CATEGORY</div>
+        <h3 class="modal-title font-serif" id="modal-title">Project Title</h3>
+        
+        <div class="modal-specs">
+          <div class="spec-item">
+            <span class="spec-label">Client</span>
+            <span class="spec-val" id="modal-client">—</span>
+          </div>
+          <div class="spec-item">
+            <span class="spec-label">Year</span>
+            <span class="spec-val" id="modal-year">—</span>
+          </div>
+          <div class="spec-item">
+            <span class="spec-label">Disciplines</span>
+            <span class="spec-val" id="modal-discipline">—</span>
+          </div>
+        </div>
+
+        <p class="modal-text" id="modal-desc"></p>
+
+        <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+          <a href="#contact" class="btn btn-gold" id="modal-inquire-btn">
+            <span>Commission Similar Project</span>
+            <span class="btn-arrow">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- JAVASCRIPT LOGIC                                                          -->
+  <!-- ========================================================================= -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+
+      /* ------------------------------------------------------------------------ */
+      /* 1. SCROLL PROGRESS INDICATOR & STICKY HEADER                             */
+      /* ------------------------------------------------------------------------ */
+      const scrollProgress = document.getElementById('scroll-progress');
+      const navbar = document.getElementById('navbar');
+      const navLinks = document.querySelectorAll('.nav-link');
+      const sections = document.querySelectorAll('section, header');
+
+      window.addEventListener('scroll', () => {
+        const scrollTop = window.scrollY;
+        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+        const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+        
+        if (scrollProgress) {
+          scrollProgress.style.width = `${progress}%`;
+        }
+
+        if (scrollTop > 50) {
+          navbar.classList.add('scrolled');
+        } else {
+          navbar.classList.remove('scrolled');
+        }
+
+        // Active section spy
+        let currentSectionId = '';
+        sections.forEach(sec => {
+          const top = sec.offsetTop - 120;
+          const height = sec.offsetHeight;
+          if (scrollTop >= top && scrollTop < top + height) {
+            currentSectionId = sec.getAttribute('id');
+          }
+        });
+
+        navLinks.forEach(link => {
+          link.classList.remove('active');
+          if (link.getAttribute('href') === `#${currentSectionId}`) {
+            link.classList.add('active');
+          }
+        });
+      });
+
+      /* ------------------------------------------------------------------------ */
+      /* 2. MOBILE DRAWER NAVIGATION                                              */
+      /* ------------------------------------------------------------------------ */
+      const menuToggle = document.getElementById('mobile-menu-toggle');
+      const mobileDrawer = document.getElementById('mobile-drawer');
+      const drawerOverlay = document.getElementById('drawer-overlay');
+      const mobileLinks = document.querySelectorAll('.mobile-nav-link, .mobile-drawer .btn');
+
+      const toggleMenu = () => {
+        menuToggle.classList.toggle('active');
+        mobileDrawer.classList.toggle('open');
+        drawerOverlay.classList.toggle('active');
+        document.body.style.overflow = mobileDrawer.classList.contains('open') ? 'hidden' : '';
+      };
+
+      const closeMenu = () => {
+        menuToggle.classList.remove('active');
+        mobileDrawer.classList.remove('open');
+        drawerOverlay.classList.remove('active');
+        document.body.style.overflow = '';
+      };
+
+      if (menuToggle) menuToggle.addEventListener('click', toggleMenu);
+      if (drawerOverlay) drawerOverlay.addEventListener('click', closeMenu);
+      mobileLinks.forEach(link => link.addEventListener('click', closeMenu));
+
+      /* ------------------------------------------------------------------------ */
+      /* 3. INTERSECTION OBSERVER ANIMATIONS & COUNTER REVEAL                     */
+      /* ------------------------------------------------------------------------ */
+      const reveals = document.querySelectorAll('.reveal');
+      const observerOptions = {
+        threshold: 0.12,
+        rootMargin: '0px 0px -40px 0px'
+      };
+
+      const revealObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, observerOptions);
+
+      reveals.forEach(el => revealObserver.observe(el));
+
+      // Number counter animation
+      const statNumbers = document.querySelectorAll('.stat-number');
+      let counted = false;
+
+      const countUp = (el) => {
+        const target = parseFloat(el.getAttribute('data-target'));
+        const prefix = el.getAttribute('data-prefix') || '';
+        const suffix = el.getAttribute('data-suffix') || '';
+        const duration = 2000;
+        const steps = 60;
+        const stepTime = duration / steps;
+        let current = 0;
+        const increment = target / steps;
+
+        const timer = setInterval(() => {
+          current += increment;
+          if (current >= target) {
+            current = target;
+            clearInterval(timer);
+          }
+          el.textContent = `${prefix}${Math.floor(current)}${suffix}`;
+        }, stepTime);
+      };
+
+      const statsObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting && !counted) {
+            counted = true;
+            statNumbers.forEach(num => countUp(num));
+          }
+        });
+      }, { threshold: 0.5 });
+
+      const heroStatsElem = document.querySelector('.hero-stats');
+      if (heroStatsElem) statsObserver.observe(heroStatsElem);
+
+      /* ------------------------------------------------------------------------ */
+      /* 4. PORTFOLIO FILTERING                                                   */
+      /* ------------------------------------------------------------------------ */
+      const filterBtns = document.querySelectorAll('.filter-btn');
+      const projectCards = document.querySelectorAll('.project-card');
+
+      filterBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          filterBtns.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+
+          const category = btn.getAttribute('data-filter');
+
+          projectCards.forEach(card => {
+            const cardCategory = card.getAttribute('data-category');
+            if (category === 'all' || cardCategory === category) {
+              card.style.display = 'flex';
+              setTimeout(() => {
+                card.style.opacity = '1';
+                card.style.transform = 'translateY(0)';
+              }, 50);
+            } else {
+              card.style.opacity = '0';
+              card.style.transform = 'scale(0.95)';
+              setTimeout(() => {
+                card.style.display = 'none';
+              }, 300);
+            }
+          });
+        });
+      });
+
+      /* ------------------------------------------------------------------------ */
+      /* 5. PROJECT MODAL PREVIEW                                                 */
+      /* ------------------------------------------------------------------------ */
+      const modal = document.getElementById('project-modal');
+      const modalClose = document.getElementById('modal-close');
+      const modalImg = document.getElementById('modal-img');
+      const modalTitle = document.getElementById('modal-title');
+      const modalCategory = document.getElementById('modal-category');
+      const modalClient = document.getElementById('modal-client');
+      const modalYear = document.getElementById('modal-year');
+      const modalDiscipline = document.getElementById('modal-discipline');
+      const modalDesc = document.getElementById('modal-desc');
+      const modalInquireBtn = document.getElementById('modal-inquire-btn');
+
+      const openModal = (card) => {
+        modalTitle.textContent = card.getAttribute('data-modal-title');
+        modalCategory.textContent = card.getAttribute('data-modal-category');
+        modalClient.textContent = card.getAttribute('data-modal-client');
+        modalYear.textContent = card.getAttribute('data-modal-year');
+        modalDiscipline.textContent = card.getAttribute('data-modal-discipline');
+        modalDesc.textContent = card.getAttribute('data-modal-desc');
+        modalImg.src = card.getAttribute('data-modal-img');
+        modalImg.alt = card.getAttribute('data-modal-title');
+
+        modal.classList.add('open');
+        document.body.style.overflow = 'hidden';
+      };
+
+      const closeModal = () => {
+        modal.classList.remove('open');
+        document.body.style.overflow = '';
+      };
+
+      projectCards.forEach(card => {
+        card.addEventListener('click', () => openModal(card));
+      });
+
+      if (modalClose) modalClose.addEventListener('click', closeModal);
+      if (modal) {
+        modal.addEventListener('click', (e) => {
+          if (e.target === modal) closeModal();
+        });
+      }
+      if (modalInquireBtn) {
+        modalInquireBtn.addEventListener('click', closeModal);
+      }
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && modal.classList.contains('open')) closeModal();
+      });
+
+      /* ------------------------------------------------------------------------ */
+      /* 6. CONTACT FORM SUBMISSION & VALIDATION                                  */
+      /* ------------------------------------------------------------------------ */
+      const contactForm = document.getElementById('agency-contact-form');
+      const formFeedback = document.getElementById('form-feedback');
+
+      if (contactForm) {
+        contactForm.addEventListener('submit', (e) => {
+          e.preventDefault();
+          const submitBtn = contactForm.querySelector('button[type="submit"]');
+          const originalText = submitBtn.innerHTML;
+
+          submitBtn.disabled = true;
+          submitBtn.innerHTML = `<span>Enciphering & Transmitting...</span>`;
+
+          setTimeout(() => {
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = originalText;
+            contactForm.reset();
+            formFeedback.classList.add('success');
+            
+            setTimeout(() => {
+              formFeedback.classList.remove('success');
+            }, 8000);
+          }, 1200);
+        });
+      }
+
+      /* ------------------------------------------------------------------------ */
+      /* 7. BACK TO TOP BUTTON                                                    */
+      /* ------------------------------------------------------------------------ */
+      const backToTopBtn = document.getElementById('back-to-top-btn');
+      if (backToTopBtn) {
+        backToTopBtn.addEventListener('click', () => {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+      }
+
+      /* ------------------------------------------------------------------------ */
+      /* 8. INTERACTIVE CONSTELLATION / GOLDEN DUST CANVAS IN HERO                */
+      /* ------------------------------------------------------------------------ */
+      const canvas = document.getElementById('hero-canvas');
+      if (canvas) {
+        const ctx = canvas.getContext('2d');
+        let width, height;
+        let particles = [];
+        let mouseX = 0, mouseY = 0;
+
+        const resize = () => {
+          width = canvas.width = canvas.parentElement.offsetWidth;
+          height = canvas.height = canvas.parentElement.offsetHeight;
+        };
+
+        window.addEventListener('resize', resize);
+        resize();
+
+        class Particle {
+          constructor() {
+            this.x = Math.random() * width;
+            this.y = Math.random() * height;
+            this.vx = (Math.random() - 0.5) * 0.4;
+            this.vy = (Math.random() - 0.5) * 0.4;
+            this.radius = Math.random() * 1.8 + 0.6;
+            this.alpha = Math.random() * 0.6 + 0.2;
+            this.baseAlpha = this.alpha;
+          }
+
+          update() {
+            this.x += this.vx;
+            this.y += this.vy;
+
+            if (this.x < 0) this.x = width;
+            if (this.x > width) this.x = 0;
+            if (this.y < 0) this.y = height;
+            if (this.y > height) this.y = 0;
+
+            // Distance from mouse
+            const dx = this.x - mouseX;
+            const dy = this.y - mouseY;
+            const dist = Math.sqrt(dx * dx + dy * dy);
+            if (dist < 120) {
+              this.alpha = Math.min(1, this.baseAlpha + (1 - dist / 120) * 0.6);
+            } else {
+              this.alpha = this.baseAlpha;
+            }
+          }
+
+          draw() {
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+            ctx.fillStyle = `rgba(212, 175, 55, ${this.alpha})`;
+            ctx.shadowBlur = 8;
+            ctx.shadowColor = 'rgba(212, 175, 55, 0.5)';
+            ctx.fill();
+            ctx.shadowBlur = 0;
+          }
+        }
+
+        const particleCount = Math.min(width > 768 ? 65 : 30, 80);
+        for (let i = 0; i < particleCount; i++) {
+          particles.push(new Particle());
+        }
+
+        window.addEventListener('mousemove', (e) => {
+          const rect = canvas.getBoundingClientRect();
+          mouseX = e.clientX - rect.left;
+          mouseY = e.clientY - rect.top;
+        });
+
+        const animate = () => {
+          ctx.clearRect(0, 0, width, height);
+
+          // Draw connecting links
+          for (let i = 0; i < particles.length; i++) {
+            for (let j = i + 1; j < particles.length; j++) {
+              const dx = particles[i].x - particles[j].x;
+              const dy = particles[i].y - particles[j].y;
+              const dist = Math.sqrt(dx * dx + dy * dy);
+
+              if (dist < 110) {
+                const linkAlpha = (1 - dist / 110) * 0.18;
+                ctx.beginPath();
+                ctx.moveTo(particles[i].x, particles[i].y);
+                ctx.lineTo(particles[j].x, particles[j].y);
+                ctx.strokeStyle = `rgba(212, 175, 55, ${linkAlpha})`;
+                ctx.lineWidth = 0.75;
+                ctx.stroke();
+              }
+            }
+          }
+
+          particles.forEach(p => {
+            p.update();
+            p.draw();
+          });
+
+          requestAnimationFrame(animate);
+        };
+
+        animate();
+      }
+
+    });
+  </script>
+</body>
+</html>
