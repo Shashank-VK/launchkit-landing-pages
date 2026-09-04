@@ -261,18 +261,65 @@
       </div>
     </div>
 
-    <!-- Direct Support & Purchase Box -->
+    <!-- Dual Payment Gateway: UPI (India) + Crypto (Global) -->
     <div class="payment-box">
-      <h3>Direct License & Tip Jar</h3>
-      <p style="color: var(--text-muted); max-width: 600px; margin: 0 auto 16px;">
-        To purchase the full commercial bundle or support ongoing template development, send <strong>$39 USDC/USDT/ETH</strong> directly to our on-chain address:
-      </p>
-      <div class="crypto-addr">
-        <span id="addr">0x49e03383285eEef3927E12D88c1227f059BbD42d</span>
-        <button class="copy-btn" onclick="navigator.clipboard.writeText('0x49e03383285eEef3927E12D88c1227f059BbD42d'); this.innerText = 'Copied!'; setTimeout(() => this.innerText = 'Copy', 2000)">Copy</button>
+      <div style="display: flex; justify-content: center; gap: 12px; margin-bottom: 24px;">
+        <button id="btn-upi" onclick="switchPay('upi')" style="padding: 10px 24px; border-radius: 10px; font-weight: 700; border: none; cursor: pointer; background: #6366f1; color: #fff; transition: all 0.2s;">🇮🇳 Pay via UPI (₹499)</button>
+        <button id="btn-crypto" onclick="switchPay('crypto')" style="padding: 10px 24px; border-radius: 10px; font-weight: 700; border: 1px solid var(--border); cursor: pointer; background: rgba(255,255,255,0.05); color: #9ca3af; transition: all 0.2s;">🌐 Pay via Crypto ($19)</button>
       </div>
-      <p style="font-size: 0.85rem; color: #6b7280;">Supports Base, Arbitrum, Optimism, Polygon, and Ethereum Mainnet</p>
+
+      <!-- UPI Section -->
+      <div id="section-upi">
+        <h3 style="margin-bottom: 8px;">Instant UPI Checkout (Zero Fees)</h3>
+        <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 20px;">
+          Scan with GPay, PhonePe, Paytm, or CRED to get immediate commercial license + download:
+        </p>
+        <div style="display: inline-block; padding: 14px; background: #ffffff; border-radius: 16px; margin-bottom: 16px;">
+          <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=upi%3A%2F%2Fpay%3Fpa%3D7760171649%40upi%26pn%3DShashank%20Karamudi%26cu%3DINR%26am%3D499" alt="UPI QR Code" style="display: block; width: 180px; height: 180px;" />
+        </div>
+        <div style="margin-bottom: 16px;">
+          <a href="upi://pay?pa=7760171649@upi&pn=Shashank%20Karamudi&cu=INR&am=499" class="btn btn-primary" style="max-width: 280px; margin: 0 auto; display: block;">⚡ Pay ₹499 via UPI App</a>
+        </div>
+        <p style="font-size: 0.85rem; color: #9ca3af;">UPI ID: <code style="color: #a5b4fc; background: rgba(0,0,0,0.4); padding: 3px 8px; border-radius: 6px;">7760171649@upi</code></p>
+      </div>
+
+      <!-- Crypto Section -->
+      <div id="section-crypto" style="display: none;">
+        <h3 style="margin-bottom: 8px;">Global On-Chain Payment</h3>
+        <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 16px;">
+          Send <strong>$19 USDC, USDT, or ETH</strong> on Base, Polygon, Arbitrum, or Ethereum:
+        </p>
+        <div class="crypto-addr">
+          <span id="addr">0x49e03383285eEef3927E12D88c1227f059BbD42d</span>
+          <button class="copy-btn" onclick="navigator.clipboard.writeText('0x49e03383285eEef3927E12D88c1227f059BbD42d'); this.innerText = 'Copied!'; setTimeout(() => this.innerText = 'Copy', 2000)">Copy</button>
+        </div>
+        <p style="font-size: 0.85rem; color: #6b7280;">Instant on-chain verification · Zero chargebacks</p>
+      </div>
     </div>
+
+    <script>
+      function switchPay(mode) {
+        const upiSec = document.getElementById('section-upi');
+        const cryptoSec = document.getElementById('section-crypto');
+        const upiBtn = document.getElementById('btn-upi');
+        const cryptoBtn = document.getElementById('btn-crypto');
+        if (mode === 'upi') {
+          upiSec.style.display = 'block';
+          cryptoSec.style.display = 'none';
+          upiBtn.style.background = '#6366f1';
+          upiBtn.style.color = '#fff';
+          cryptoBtn.style.background = 'rgba(255,255,255,0.05)';
+          cryptoBtn.style.color = '#9ca3af';
+        } else {
+          upiSec.style.display = 'none';
+          cryptoSec.style.display = 'block';
+          cryptoBtn.style.background = '#6366f1';
+          cryptoBtn.style.color = '#fff';
+          upiBtn.style.background = 'rgba(255,255,255,0.05)';
+          upiBtn.style.color = '#9ca3af';
+        }
+      }
+    </script>
   </div>
 
   <footer>
