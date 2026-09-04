@@ -1,0 +1,16 @@
+name: Check Revenue Wallet
+
+on:
+  schedule:
+    - cron: '0 */6 * * *' # Every 6 hours
+  workflow_dispatch: # Can also be triggered manually
+
+jobs:
+  check-balance:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check On-Chain Balances
+        run: |
+          ADDR="0x49e03383285eEef3927E12D88c1227f059BbD42d"
+          echo "Checking Base / Ethereum balances for $ADDR..."
+          curl -s "https://base.blockscout.com/api/v2/addresses/$ADDR" | jq '.coin_balance' || true
