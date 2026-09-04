@@ -3,656 +3,697 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Free SEO & SERP Inspector — LaunchKit Engineering</title>
+  <title>SEO & SERP Inspector — Technical Diagnostic Suite</title>
   <meta name="description" content="Instant zero-server technical SEO audit, SERP Google snippet visualizer, and OpenGraph social validator." />
-  
-  <!-- Premium Typography: Plus Jakarta Sans & JetBrains Mono -->
+
+  <!-- Premium Typography: Cabinet Grotesk + Plus Jakarta Sans + JetBrains Mono -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Cabinet+Grotesk:wght@700;800;900&family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
 
   <style>
     :root {
-      --bg: #05070c;
-      --bg-surface: #0a0e17;
-      --bg-card: rgba(14, 19, 31, 0.75);
-      --border-outer: rgba(255, 255, 255, 0.08);
-      --border-inner: rgba(255, 255, 255, 0.05);
-      --border-highlight: rgba(255, 255, 255, 0.18);
+      --bg: #07090e;
+      --bg-surface: #0c1017;
+      --bg-elevated: #111722;
+      --border-subtle: rgba(255, 255, 255, 0.07);
+      --border-focus: rgba(255, 255, 255, 0.18);
       --accent: #6366f1;
       --accent-cyan: #06b6d4;
-      --accent-glow: rgba(99, 102, 241, 0.22);
-      --text: #f8fafc;
-      --text-muted: #94a3b8;
-      --text-dim: #64748b;
+      --text-main: #f1f5f9;
+      --text-muted: #8e9cae;
+      --text-dim: #556579;
       --success: #10b981;
       --warning: #f59e0b;
       --danger: #ef4444;
-      --radius-outer: 26px;
-      --radius-inner: 20px;
-      --ease-fluid: cubic-bezier(0.16, 1, 0.3, 1);
+      --font-display: 'Cabinet Grotesk', -apple-system, sans-serif;
+      --font-body: 'Plus Jakarta Sans', -apple-system, sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+      --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    
+
     body {
-      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
       background-color: var(--bg);
-      color: var(--text);
-      min-height: 100dvh;
-      line-height: 1.6;
+      color: var(--text-main);
+      font-family: var(--font-body);
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
       background-image: 
-        radial-gradient(ellipse 90% 50% at 50% -10%, rgba(99, 102, 241, 0.14), transparent 70%),
-        radial-gradient(circle at 85% 25%, rgba(6, 182, 212, 0.08), transparent 50%),
-        radial-gradient(circle at 15% 65%, rgba(99, 102, 241, 0.06), transparent 50%);
+        radial-gradient(ellipse 80% 40% at 50% -5%, rgba(6, 182, 212, 0.08), transparent 70%),
+        radial-gradient(circle at 10% 30%, rgba(99, 102, 241, 0.06), transparent 50%);
       background-attachment: fixed;
     }
 
-    /* Floating Island Navigation */
-    .nav-wrapper {
+    /* Minimal Split Navigation */
+    .nav-bar {
+      border-bottom: 1px solid var(--border-subtle);
+      background: rgba(7, 9, 14, 0.85);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
       position: sticky;
-      top: 20px;
+      top: 0;
       z-index: 100;
-      padding: 0 20px;
-      margin-bottom: 40px;
     }
-    .nav-island {
-      max-width: 960px;
+    .nav-inner {
+      max-width: 1280px;
       margin: 0 auto;
-      background: rgba(10, 14, 23, 0.7);
-      backdrop-filter: blur(24px);
-      -webkit-backdrop-filter: blur(24px);
-      border: 1px solid var(--border-outer);
-      border-radius: 9999px;
-      padding: 8px 14px 8px 24px;
+      padding: 16px 24px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.7), inset 0 1px 1px rgba(255, 255, 255, 0.1);
     }
-    .nav-brand {
+    .brand-mark {
       display: flex;
       align-items: center;
-      gap: 10px;
-      font-weight: 800;
-      font-size: 1.05rem;
-      letter-spacing: -0.02em;
-      color: #fff;
+      gap: 12px;
       text-decoration: none;
+      color: #fff;
     }
-    .nav-brand-mark {
-      width: 26px;
-      height: 26px;
-      border-radius: 8px;
-      background: linear-gradient(135deg, #6366f1, #06b6d4);
+    .brand-logo-cube {
+      width: 28px;
+      height: 28px;
+      background: linear-gradient(135deg, #06b6d4, #4f46e5);
+      border-radius: 6px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 13px;
-      font-weight: 900;
+      font-family: var(--font-mono);
+      font-weight: 800;
+      font-size: 14px;
       color: #fff;
-      box-shadow: 0 4px 12px rgba(99, 102, 241, 0.4);
     }
-    .nav-link {
+    .brand-name {
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+    }
+    .nav-btn-link {
       color: var(--text-muted);
       text-decoration: none;
-      font-size: 0.88rem;
+      font-size: 0.86rem;
       font-weight: 600;
       padding: 8px 16px;
-      border-radius: 9999px;
-      transition: all 0.3s var(--ease-fluid);
+      border-radius: 8px;
+      transition: all 0.2s;
     }
-    .nav-link:hover {
-      color: #fff;
-      background: rgba(255, 255, 255, 0.05);
-    }
+    .nav-btn-link:hover { color: #fff; }
 
-    /* Header */
-    .header {
-      max-width: 880px;
+    /* Diagnostic Header */
+    .header-section {
+      max-width: 1280px;
       margin: 0 auto;
-      text-align: center;
-      padding: 30px 20px 40px;
+      padding: 60px 24px 30px;
     }
-    .eyebrow-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.78rem;
-      font-weight: 600;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: #38bdf8;
-      background: rgba(6, 182, 212, 0.1);
-      border: 1px solid rgba(6, 182, 212, 0.25);
-      padding: 6px 16px;
-      border-radius: 9999px;
-      margin-bottom: 24px;
-    }
-    h1 {
-      font-size: clamp(2.2rem, 5vw, 3.6rem);
-      font-weight: 800;
+    .tool-headline {
+      font-family: var(--font-display);
+      font-size: clamp(2.2rem, 4vw, 3.4rem);
+      font-weight: 900;
       letter-spacing: -0.04em;
-      line-height: 1.15;
-      margin-bottom: 20px;
-      background: linear-gradient(180deg, #ffffff 20%, #cbd5e1 80%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-    .subtitle {
-      font-size: 1.15rem;
-      color: var(--text-muted);
-      max-width: 600px;
-      margin: 0 auto 30px;
-      font-weight: 400;
-    }
-
-    .container {
-      max-width: 960px;
-      margin: 0 auto;
-      padding: 0 20px 100px;
-    }
-
-    /* Double-Bezel Input Console */
-    .bezel-outer {
-      background: rgba(255, 255, 255, 0.02);
-      border: 1px solid var(--border-outer);
-      border-radius: var(--radius-outer);
-      padding: 8px;
-      margin-bottom: 40px;
-      box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.7);
-    }
-    .bezel-inner {
-      background: linear-gradient(180deg, rgba(17, 24, 39, 0.8) 0%, rgba(10, 14, 23, 0.98) 100%);
-      border: 1px solid var(--border-inner);
-      border-radius: var(--radius-inner);
-      padding: 32px;
-      box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.08);
-    }
-    .input-toolbar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+      color: #fff;
+      line-height: 1.1;
       margin-bottom: 12px;
     }
-    .input-label {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.82rem;
-      font-weight: 600;
-      color: #94a3b8;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-    .sample-link {
-      background: none;
-      border: none;
-      color: #38bdf8;
-      font-size: 0.82rem;
-      font-weight: 600;
-      cursor: pointer;
-      font-family: 'JetBrains Mono', monospace;
-      transition: color 0.2s;
-    }
-    .sample-link:hover { color: #7dd3fc; text-decoration: underline; }
-    textarea {
-      width: 100%;
-      height: 160px;
-      background: #080b12;
-      border: 1px solid rgba(255, 255, 255, 0.07);
-      border-radius: 14px;
-      padding: 16px;
-      color: #e2e8f0;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.88rem;
-      line-height: 1.5;
-      resize: vertical;
-      margin-bottom: 20px;
-      outline: none;
-      box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.6);
-      transition: border-color 0.3s var(--ease-fluid);
-    }
-    textarea:focus {
-      border-color: rgba(99, 102, 241, 0.6);
-      box-shadow: 0 0 20px rgba(99, 102, 241, 0.2);
+    .tool-desc {
+      color: var(--text-muted);
+      font-size: 1.05rem;
+      max-width: 600px;
     }
 
-    /* Primary CTA */
-    .btn-island-primary {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 100%;
-      padding: 12px 14px 12px 28px;
-      background: linear-gradient(135deg, #4f46e5, #6366f1);
-      color: #ffffff;
-      text-decoration: none;
-      font-weight: 700;
-      font-size: 1rem;
-      border-radius: 9999px;
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      box-shadow: 0 16px 32px -8px rgba(99, 102, 241, 0.5);
-      transition: all 0.4s var(--ease-fluid);
-      cursor: pointer;
+    /* Dual-Pane Workspace */
+    .workspace-grid {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 20px 24px 80px;
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 30px;
+      align-items: start;
     }
-    .btn-island-primary:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 20px 40px -6px rgba(99, 102, 241, 0.7);
-    }
-    .btn-island-primary:active { transform: scale(0.99); }
-    .btn-icon-capsule {
-      width: 32px;
-      height: 32px;
-      border-radius: 50%;
-      background: rgba(255, 255, 255, 0.2);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-left: 14px;
-      transition: transform 0.4s var(--ease-fluid);
-    }
-    .btn-island-primary:hover .btn-icon-capsule {
-      transform: translate(3px, -3px);
+    @media (max-width: 960px) {
+      .workspace-grid { grid-template-columns: 1fr; }
     }
 
-    /* Results Console */
-    #results { display: none; }
-    .score-banner {
+    /* Left Console: Code Terminal */
+    .console-panel {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+    }
+    .console-topbar {
+      background: rgba(255, 255, 255, 0.02);
+      border-bottom: 1px solid var(--border-subtle);
+      padding: 12px 18px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      background: linear-gradient(135deg, rgba(14, 19, 31, 0.9) 0%, rgba(10, 14, 23, 0.95) 100%);
-      border: 1px solid var(--border-outer);
-      border-radius: 20px;
-      padding: 30px 36px;
-      margin-bottom: 30px;
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .preset-pills {
+      display: flex;
+      gap: 8px;
+    }
+    .preset-btn {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-muted);
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      font-weight: 600;
+      padding: 4px 10px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .preset-btn:hover {
+      background: rgba(255, 255, 255, 0.08);
+      color: #fff;
+    }
+    .editor-wrapper {
+      position: relative;
+    }
+    textarea.code-editor {
+      width: 100%;
+      height: 380px;
+      background: #090c13;
+      border: none;
+      padding: 20px;
+      color: #e2e8f0;
+      font-family: var(--font-mono);
+      font-size: 0.86rem;
+      line-height: 1.7;
+      resize: vertical;
+      outline: none;
+      box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.5);
+    }
+    .console-footer {
+      border-top: 1px solid var(--border-subtle);
+      padding: 14px 20px;
+      background: rgba(0, 0, 0, 0.25);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .btn-run-audit {
+      background: linear-gradient(135deg, #4f46e5, #06b6d4);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: #fff;
+      font-family: var(--font-body);
+      font-weight: 700;
+      font-size: 0.9rem;
+      padding: 10px 24px;
+      border-radius: 8px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 8px 20px rgba(6, 182, 212, 0.25);
+      transition: all 0.2s var(--ease-out);
+    }
+    .btn-run-audit:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 12px 24px rgba(6, 182, 212, 0.35);
+    }
+    .btn-run-audit:active { transform: scale(0.98); }
+
+    /* Right Console: Diagnostic HUD */
+    .hud-panel {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .telemetry-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: 16px;
+      padding: 26px;
+    }
+
+    .score-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
+    .score-meta-label {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--text-dim);
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+    .score-grade-text {
+      font-family: var(--font-display);
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: #fff;
     }
     .score-number {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 3.8rem;
+      font-family: var(--font-mono);
+      font-size: 3.4rem;
       font-weight: 800;
       line-height: 1;
     }
-    .score-good { color: var(--success); text-shadow: 0 0 25px rgba(16, 185, 129, 0.4); }
-    .score-warn { color: var(--warning); text-shadow: 0 0 25px rgba(245, 158, 11, 0.4); }
-    .score-bad { color: var(--danger); text-shadow: 0 0 25px rgba(239, 68, 68, 0.4); }
+    .score-good { color: var(--success); }
+    .score-warn { color: var(--warning); }
+    .score-bad { color: var(--danger); }
 
-    /* SERP Google Visualizer */
-    .serp-box {
+    /* Realistic Google SERP Preview */
+    .serp-card {
       background: #ffffff;
       color: #202124;
-      border-radius: 18px;
-      padding: 24px;
-      margin-bottom: 30px;
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+      border-radius: 14px;
+      padding: 20px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
     }
-    .serp-url {
-      font-size: 0.85rem;
-      color: #202124;
+    .serp-header {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      color: #70757a;
+      text-transform: uppercase;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+    .serp-url-row {
       display: flex;
       align-items: center;
       gap: 6px;
-      margin-bottom: 6px;
+      font-size: 0.82rem;
+      color: #202124;
+      margin-bottom: 4px;
     }
-    .serp-title {
-      font-size: 1.3rem;
+    .serp-url-icon {
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: #e8f0fe;
+      color: #1a73e8;
+      font-size: 9px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .serp-title-link {
+      font-size: 1.22rem;
       color: #1a0dab;
       font-weight: 500;
       line-height: 1.3;
       margin-bottom: 6px;
       cursor: pointer;
     }
-    .serp-title:hover { text-decoration: underline; }
-    .serp-desc {
-      font-size: 0.9rem;
+    .serp-title-link:hover { text-decoration: underline; }
+    .serp-snippet {
+      font-size: 0.88rem;
       color: #4d5156;
-      line-height: 1.5;
+      line-height: 1.45;
     }
 
-    /* Result Details */
-    .result-card {
-      background: rgba(14, 19, 31, 0.6);
-      border: 1px solid var(--border-inner);
-      border-radius: 18px;
-      padding: 24px;
-      margin-bottom: 16px;
-      transition: border-color 0.3s;
+    /* Breakdown Rows */
+    .metric-row {
+      border-top: 1px solid var(--border-subtle);
+      padding: 16px 0 0;
+      margin-top: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
     }
-    .result-card:hover { border-color: rgba(255, 255, 255, 0.12); }
-    .result-header {
+    .metric-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 10px;
     }
-    .result-title {
-      font-size: 1.05rem;
+    .metric-name {
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
       font-weight: 700;
-      color: #fff;
+      color: #cbd5e1;
     }
-    .pill {
-      font-family: 'JetBrains Mono', monospace;
-      padding: 4px 12px;
-      border-radius: 9999px;
-      font-size: 0.75rem;
+    .status-badge {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
       font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 5px;
       text-transform: uppercase;
     }
-    .pill-pass { background: rgba(16, 185, 129, 0.15); color: var(--success); border: 1px solid rgba(16, 185, 129, 0.3); }
-    .pill-warn { background: rgba(245, 158, 11, 0.15); color: var(--warning); border: 1px solid rgba(245, 158, 11, 0.3); }
-    .pill-fail { background: rgba(239, 68, 68, 0.15); color: var(--danger); border: 1px solid rgba(239, 68, 68, 0.3); }
-    .result-val {
+    .badge-pass { background: rgba(16, 185, 129, 0.15); color: var(--success); border: 1px solid rgba(16, 185, 129, 0.3); }
+    .badge-warn { background: rgba(245, 158, 11, 0.15); color: var(--warning); border: 1px solid rgba(245, 158, 11, 0.3); }
+    .badge-fail { background: rgba(239, 68, 68, 0.15); color: var(--danger); border: 1px solid rgba(239, 68, 68, 0.3); }
+    .metric-detail {
+      font-size: 0.86rem;
       color: var(--text-muted);
-      font-size: 0.92rem;
-      line-height: 1.6;
+      line-height: 1.5;
     }
 
-    /* Conversion Footer */
-    .conversion-card {
-      margin-top: 50px;
-      background: rgba(255, 255, 255, 0.02);
-      border: 1px solid rgba(16, 185, 129, 0.3);
-      border-radius: 26px;
-      padding: 40px 30px;
-      text-align: center;
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6), 0 0 50px -15px rgba(16, 185, 129, 0.15);
+    /* Resolution Banner */
+    .resolution-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-accent);
+      border-radius: 16px;
+      padding: 24px;
+      text-align: left;
     }
+    .resolution-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      width: 100%;
+      padding: 12px;
+      background: #22c55e;
+      color: #03210e;
+      font-weight: 800;
+      font-size: 0.9rem;
+      text-decoration: none;
+      border-radius: 8px;
+      margin-top: 14px;
+      transition: background-color 0.2s;
+    }
+    .resolution-btn:hover { background: #16a34a; }
 
     footer {
+      border-top: 1px solid var(--border-subtle);
+      padding: 24px;
       text-align: center;
-      padding: 40px 20px;
-      border-top: 1px solid var(--border-inner);
-      font-size: 0.85rem;
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
       color: var(--text-dim);
     }
   </style>
 </head>
 <body>
 
-  <!-- Floating Island Navbar -->
-  <div class="nav-wrapper">
-    <nav class="nav-island">
-      <a href="index.html" class="nav-brand">
-        <div class="nav-brand-mark">⚡</div>
-        <span>LaunchKit</span>
+  <!-- Minimal Navigation -->
+  <nav class="nav-bar">
+    <div class="nav-inner">
+      <a href="index.html" class="brand-mark">
+        <div class="brand-logo-cube">M</div>
+        <span class="brand-name">MetaPulse / Inspector</span>
       </a>
-      <div class="nav-links">
-        <a href="index.html" class="nav-link">← Storefront</a>
-        <a href="https://github.com/Shashank-VK/metapulse-chrome-extension" target="_blank" class="nav-link">Chrome Extension</a>
+      <div>
+        <a href="index.html" class="nav-btn-link">&larr; Return to Storefront</a>
       </div>
-    </nav>
-  </div>
-
-  <div class="header">
-    <div class="eyebrow-badge">
-      <span>●</span>
-      <span>Autonomous Client-Side Diagnostic</span>
     </div>
-    <h1>Technical SEO & SERP Inspector</h1>
-    <p class="subtitle">
-      Inspect title length thresholds, OpenGraph social cards, and heading structure with zero latency.
-    </p>
-  </div>
+  </nav>
 
-  <div class="container">
-    <div class="bezel-outer">
-      <div class="bezel-inner">
-        <div class="input-toolbar">
-          <label class="input-label">
-            <span>&lt;/&gt;</span>
-            <span>PASTE HTML CODE OR &lt;HEAD&gt; BLOCK:</span>
-          </label>
-          <button class="sample-link" onclick="loadSample()">Load Sample HTML</button>
+  <!-- Header -->
+  <header class="header-section">
+    <h1 class="tool-headline">Technical SEO & SERP Telemetry</h1>
+    <p class="tool-desc">
+      Inspect meta tag lengths, Google search snippets, OpenGraph visual cards, and heading structure with zero network latency.
+    </p>
+  </header>
+
+  <!-- Dual-Pane Workspace -->
+  <main class="workspace-grid">
+
+    <!-- Left: Code Editor Console -->
+    <div class="console-panel">
+      <div class="console-topbar">
+        <span style="font-family: var(--font-mono); font-size: 0.78rem; color: var(--text-dim);">SOURCE_CODE.html</span>
+        <div class="preset-pills">
+          <button class="preset-btn" onclick="loadPreset('optimized')">Sample: SaaS (Optimal)</button>
+          <button class="preset-btn" onclick="loadPreset('broken')">Sample: Broken (Fail)</button>
+          <button class="preset-btn" onclick="clearInput()">Clear</button>
         </div>
-        <textarea id="htmlInput" placeholder="<!DOCTYPE html><html><head><title>Your Product Title</title><meta name='description' content='Your meta description...'>...</head><body>...</body></html>"></textarea>
-        <button class="btn-island-primary" onclick="runAudit()">
-          <span>Run Technical SEO Audit</span>
-          <div class="btn-icon-capsule">↗</div>
+      </div>
+      <div class="editor-wrapper">
+        <textarea id="htmlInput" class="code-editor" placeholder="Paste your HTML markup here..."></textarea>
+      </div>
+      <div class="console-footer">
+        <span style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-dim);">Press Ctrl+Enter to Run</span>
+        <button class="btn-run-audit" onclick="runAudit()">
+          <span>Run Technical Audit</span>
+          <span>&rarr;</span>
         </button>
       </div>
     </div>
 
-    <!-- Results Section -->
-    <div id="results">
-      <div class="score-banner">
-        <div>
-          <div style="font-family: 'JetBrains Mono', monospace; font-size: 0.82rem; text-transform: uppercase; color: var(--text-muted); font-weight: 700; margin-bottom: 6px;">
-            DIAGNOSTIC HEALTH RATING
+    <!-- Right: Telemetry HUD -->
+    <div class="hud-panel">
+
+      <!-- Score Card -->
+      <div class="telemetry-card">
+        <div class="score-row">
+          <div>
+            <div class="score-meta-label">TECHNICAL HEALTH RATING</div>
+            <div id="scoreGrade" class="score-grade-text">Optimal Readiness</div>
           </div>
-          <div id="scoreText" style="font-size: 1.25rem; font-weight: 700; color: #fff;">Calculating...</div>
+          <div id="scoreNum" class="score-number score-good">100</div>
         </div>
-        <div id="scoreNum" class="score-number score-good">100</div>
+
+        <!-- Google SERP Card -->
+        <div class="serp-card">
+          <div class="serp-header">Google SERP Simulator (Mobile & Desktop)</div>
+          <div class="serp-url-row">
+            <div class="serp-url-icon">&bull;</div>
+            <span style="color:#202124;">https://example.com</span>
+            <span style="color:#70757a;">&rsaquo; index</span>
+          </div>
+          <div id="serpTitle" class="serp-title-link">Acme AI &mdash; Autonomous Workflow Engine</div>
+          <div id="serpSnippet" class="serp-snippet">
+            Automate engineering ticket triage and customer intelligence with instant API webhooks. Deploy in minutes.
+          </div>
+        </div>
+
+        <!-- Metric Details -->
+        <div class="metric-row">
+          <div class="metric-header">
+            <span class="metric-name">&lt;title&gt; Character Density</span>
+            <span id="badgeTitle" class="status-badge badge-pass">Optimal</span>
+          </div>
+          <p id="descTitle" class="metric-detail">Optimal length (30&ndash;65 chars). Prevents SERP truncation.</p>
+        </div>
+
+        <div class="metric-row">
+          <div class="metric-header">
+            <span class="metric-name">&lt;meta name="description"&gt; Snippet</span>
+            <span id="badgeDesc" class="status-badge badge-pass">Optimal</span>
+          </div>
+          <p id="descDesc" class="metric-detail">Optimal length (100&ndash;160 chars). Maximum search click-through rate.</p>
+        </div>
+
+        <div class="metric-row">
+          <div class="metric-header">
+            <span class="metric-name">OpenGraph Protocol (og:title / og:image)</span>
+            <span id="badgeOG" class="status-badge badge-pass">Complete</span>
+          </div>
+          <p id="descOG" class="metric-detail">Social preview cards will render with full rich media on WhatsApp and Twitter.</p>
+        </div>
+
+        <div class="metric-row">
+          <div class="metric-header">
+            <span class="metric-name">Semantic &lt;h1&gt; Hierarchy</span>
+            <span id="badgeH1" class="status-badge badge-pass">Optimal</span>
+          </div>
+          <p id="descH1" class="metric-detail">Exactly one primary &lt;h1&gt; tag present. Clear semantic content hierarchy.</p>
+        </div>
       </div>
 
-      <!-- Google SERP Visualizer -->
-      <div class="serp-box">
-        <div style="font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: #70757a; text-transform: uppercase; font-weight: 700; margin-bottom: 12px;">
-          GOOGLE SEARCH RESULT PREVIEW (DESKTOP / MOBILE)
-        </div>
-        <div class="serp-url">
-          <span style="display:inline-block; width:16px; height:16px; border-radius:50%; background:#e8f0fe; text-align:center; font-size:10px; line-height:16px; color:#1a73e8;">🔍</span>
-          <span>https://yourdomain.com</span>
-          <span style="color:#70757a;">› page</span>
-        </div>
-        <div id="serpTitle" class="serp-title">Acme AI — Automated Workflow Intelligence</div>
-        <div id="serpDesc" class="serp-desc">Acme AI automates repetitive engineering and customer support workflows. Connect your API and start saving 20 hours per week today.</div>
+      <!-- Turnkey Resolution Card -->
+      <div class="resolution-card">
+        <span style="font-family: var(--font-mono); font-size: 0.72rem; color: #38bdf8; font-weight: 700;">TURNKEY SERVICE</span>
+        <h4 style="font-family: var(--font-display); font-size: 1.25rem; font-weight: 800; color: #fff; margin-top: 6px;">Need a 100/100 SEO Architecture?</h4>
+        <p style="color: var(--text-muted); font-size: 0.88rem; line-height: 1.6; margin-top: 6px;">
+          We build custom, standalone single-page websites with perfect semantic hierarchy, schema markup, and social cards in 24 hours for &#8377;2,499 ($49 USD).
+        </p>
+        <a href="https://wa.me/919980955236?text=Hi%20Shashank,%20I%20used%20your%20SEO%20Inspector%20and%20want%20to%20order%20a%20landing%20page%20(₹2,499)." target="_blank" class="resolution-btn">
+          <span>Order 100/100 Build on WhatsApp</span>
+          <span>&rarr;</span>
+        </a>
       </div>
 
-      <!-- Detail Cards -->
-      <div class="result-card">
-        <div class="result-header">
-          <div class="result-title">&lt;title&gt; Character & Keyword Optimization</div>
-          <span id="titlePill" class="pill pill-pass">Pass</span>
-        </div>
-        <div id="titleContent" class="result-val">No title tag found.</div>
-      </div>
-
-      <div class="result-card">
-        <div class="result-header">
-          <div class="result-title">&lt;meta name="description"&gt; Snippet Quality</div>
-          <span id="descPill" class="pill pill-pass">Pass</span>
-        </div>
-        <div id="descContent" class="result-val">No meta description found.</div>
-      </div>
-
-      <div class="result-card">
-        <div class="result-header">
-          <div class="result-title">OpenGraph (og:title & og:image) Social Preview</div>
-          <span id="ogPill" class="pill pill-pass">Pass</span>
-        </div>
-        <div id="ogContent" class="result-val">Checking...</div>
-      </div>
-
-      <div class="result-card">
-        <div class="result-header">
-          <div class="result-title">Semantic Heading Structure (&lt;h1&gt;)</div>
-          <span id="h1Pill" class="pill pill-pass">Pass</span>
-        </div>
-        <div id="h1Content" class="result-val">Checking...</div>
-      </div>
     </div>
 
-    <!-- Done-For-You Upgrade Card -->
-    <div class="conversion-card">
-      <div class="eyebrow-badge" style="color: #34d399; background: rgba(16, 185, 129, 0.1); border-color: rgba(16, 185, 129, 0.25);">
-        <span>Turnkey Resolution</span>
-      </div>
-      <h3 style="font-size: 1.8rem; font-weight: 800; letter-spacing: -0.03em; margin-bottom: 10px; color: #fff;">Need a 100/100 SEO Landing Page Built Today?</h3>
-      <p style="color: var(--text-muted); max-width: 620px; margin: 0 auto 24px; font-size: 0.98rem;">
-        We build bespoke, lightning-fast landing pages with 100% Google Lighthouse scores, schema markup, and social cards for <strong>₹2,499 INR ($49 USD)</strong>.
-      </p>
-      <a href="https://wa.me/919980955236?text=Hi%20Shashank,%20I%20used%20your%20SEO%20Inspector%20and%20want%20to%20order%20a%20landing%20page%20(₹2,499)." target="_blank" class="btn-island-primary" style="display: inline-flex; width: auto; padding: 12px 30px;">
-        <span>Order Custom Site on WhatsApp</span>
-        <div class="btn-icon-capsule">↗</div>
-      </a>
-      <div style="margin-top: 14px; font-family: 'JetBrains Mono', monospace; font-size: 0.82rem; color: var(--text-dim);">
-        Instant Settlement via UPI: <code style="color: #38bdf8;">shashankkaramudi@ibl</code>
-      </div>
-    </div>
-  </div>
+  </main>
 
   <footer>
-    <p>© 2026 Shashank Karamudi · Engineered with Vanguard UI Standards · LaunchKit Tools</p>
+    <p>&copy; 2026 Shashank Karamudi &middot; MetaPulse Diagnostic Engine &middot; UPI: shashankkaramudi@ibl</p>
   </footer>
 
   <script>
-    function loadSample() {
-      document.getElementById('htmlInput').value = `<!DOCTYPE html>
+    const presets = {
+      optimized: `<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Acme AI — Automated Workflow Intelligence for High-Growth Startups</title>
-  <meta name="description" content="Acme AI automates repetitive engineering and customer support workflows. Connect your API and start saving 20 hours per week today.">
-  <meta property="og:title" content="Acme AI — Workflow Intelligence">
+  <title>Acme AI — Autonomous Workflow Engine for Engineering Teams</title>
+  <meta name="description" content="Automate engineering ticket triage, security audits, and customer support intelligence with instant API webhooks. Deploy in 5 minutes.">
+  <meta property="og:title" content="Acme AI — Workflow Engine">
   <meta property="og:image" content="https://example.com/social-preview.png">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
-  <h1>Transform Your Operational Efficiency with AI</h1>
-  <p>Ship faster with automated task distribution.</p>
+  <h1>Transform Engineering Productivity with Autonomous AI</h1>
+  <p>Production-ready pipelines with zero maintenance.</p>
 </body>
-</html>`;
+</html>`,
+      broken: `<!DOCTYPE html>
+<html>
+<head>
+  <!-- Missing title -->
+  <!-- Missing meta description -->
+  <!-- Missing OpenGraph -->
+</head>
+<body>
+  <h1>Heading 1</h1>
+  <h1>Duplicate Heading 1</h1>
+</body>
+</html>`
+    };
+
+    function loadPreset(key) {
+      document.getElementById('htmlInput').value = presets[key] || '';
+      runAudit();
     }
+
+    function clearInput() {
+      document.getElementById('htmlInput').value = '';
+    }
+
+    document.getElementById('htmlInput').addEventListener('keydown', function(e) {
+      if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+        runAudit();
+      }
+    });
 
     function runAudit() {
       const html = document.getElementById('htmlInput').value.trim();
-      if (!html) {
-        alert('Please paste HTML code or click "Load Sample HTML"!');
-        return;
-      }
+      if (!html) return;
 
       const parser = new DOMParser();
       const doc = parser.parseFromString(html, 'text/html');
 
       let score = 0;
 
-      // Title
+      // 1. Title
       const title = doc.querySelector('title')?.innerText || '';
-      const titlePill = document.getElementById('titlePill');
-      const titleContent = document.getElementById('titleContent');
-      const serpTitle = document.getElementById('serpTitle');
-      
-      if (title) {
-        serpTitle.innerText = title;
-      } else {
-        serpTitle.innerText = 'Untitled Document';
-      }
+      const bTitle = document.getElementById('badgeTitle');
+      const dTitle = document.getElementById('descTitle');
+      const sTitle = document.getElementById('serpTitle');
+
+      sTitle.innerText = title || 'Untitled Page';
 
       if (!title) {
-        titlePill.className = 'pill pill-fail';
-        titlePill.innerText = 'Missing (0 pts)';
-        titleContent.innerText = 'No <title> tag found. Critical ranking flaw.';
+        bTitle.className = 'status-badge badge-fail';
+        bTitle.innerText = 'Missing (0 pts)';
+        dTitle.innerText = 'Critical flaw: Missing <title> tag. Search engines cannot index your page name.';
       } else if (title.length < 30) {
-        titlePill.className = 'pill pill-warn';
-        titlePill.innerText = 'Too Short';
-        titleContent.innerText = `"${title}" (${title.length} chars). Aim for 30–60 characters.`;
+        bTitle.className = 'status-badge badge-warn';
+        bTitle.innerText = 'Too Short';
+        dTitle.innerText = `Title is only ${title.length} characters. Optimal target is 30–65 characters.`;
         score += 15;
       } else if (title.length > 65) {
-        titlePill.className = 'pill pill-warn';
-        titlePill.innerText = 'Too Long';
-        titleContent.innerText = `"${title}" (${title.length} chars). Title will get truncated in Google search results.`;
+        bTitle.className = 'status-badge badge-warn';
+        bTitle.innerText = 'Too Long';
+        dTitle.innerText = `Title is ${title.length} characters and will be truncated with '...' on search results.`;
         score += 20;
       } else {
-        titlePill.className = 'pill pill-pass';
-        titlePill.innerText = 'Optimal';
-        titleContent.innerText = `"${title}" (${title.length} chars). Excellent length and keyword focus!`;
+        bTitle.className = 'status-badge badge-pass';
+        bTitle.innerText = 'Optimal';
+        dTitle.innerText = `Optimal length (${title.length} chars). High keyword clarity.`;
         score += 30;
       }
 
-      // Meta Description
+      // 2. Meta Description
       const desc = doc.querySelector('meta[name="description"]')?.getAttribute('content') || '';
-      const descPill = document.getElementById('descPill');
-      const descContent = document.getElementById('descContent');
-      const serpDesc = document.getElementById('serpDesc');
+      const bDesc = document.getElementById('badgeDesc');
+      const dDesc = document.getElementById('descDesc');
+      const sSnippet = document.getElementById('serpSnippet');
 
-      if (desc) {
-        serpDesc.innerText = desc;
-      } else {
-        serpDesc.innerText = 'No snippet could be found. Search engines will extract random text fragments from your body.';
-      }
+      sSnippet.innerText = desc || 'No meta description found. Google will extract random text fragments from your body content.';
 
       if (!desc) {
-        descPill.className = 'pill pill-fail';
-        descPill.innerText = 'Missing';
-        descContent.innerText = 'No meta description found. Google will extract arbitrary text fragments.';
-      } else if (desc.length < 90) {
-        descPill.className = 'pill pill-warn';
-        descPill.innerText = 'Too Short';
-        descContent.innerText = `"${desc}" (${desc.length} chars). Aim for 120–160 characters.`;
+        bDesc.className = 'status-badge badge-fail';
+        bDesc.innerText = 'Missing (0 pts)';
+        dDesc.innerText = 'Missing meta description. Search engines will display arbitrary fragments.';
+      } else if (desc.length < 80) {
+        bDesc.className = 'status-badge badge-warn';
+        bDesc.innerText = 'Too Short';
+        dDesc.innerText = `Description is ${desc.length} characters. Recommended range is 100–160 characters.`;
         score += 15;
       } else if (desc.length > 165) {
-        descPill.className = 'pill pill-warn';
-        descPill.innerText = 'Too Long';
-        descContent.innerText = `"${desc}" (${desc.length} chars). Truncated on mobile viewports.`;
+        bDesc.className = 'status-badge badge-warn';
+        bDesc.innerText = 'Too Long';
+        dDesc.innerText = `Description is ${desc.length} characters and will get clipped on mobile viewports.`;
         score += 20;
       } else {
-        descPill.className = 'pill pill-pass';
-        descPill.innerText = 'Optimal';
-        descContent.innerText = `"${desc}" (${desc.length} chars). Perfect snippet length.`;
+        bDesc.className = 'status-badge badge-pass';
+        bDesc.innerText = 'Optimal';
+        dDesc.innerText = `Optimal snippet length (${desc.length} chars).`;
         score += 30;
       }
 
-      // Open Graph
+      // 3. OpenGraph
       const ogTitle = doc.querySelector('meta[property="og:title"]')?.getAttribute('content');
       const ogImage = doc.querySelector('meta[property="og:image"]')?.getAttribute('content');
-      const ogPill = document.getElementById('ogPill');
-      const ogContent = document.getElementById('ogContent');
+      const bOG = document.getElementById('badgeOG');
+      const dOG = document.getElementById('descOG');
+
       if (ogTitle && ogImage) {
-        ogPill.className = 'pill pill-pass';
-        ogPill.innerText = 'Complete';
-        ogContent.innerText = `Both og:title and og:image are present. Social previews on WhatsApp, Twitter, and LinkedIn will render rich cards.`;
+        bOG.className = 'status-badge badge-pass';
+        bOG.innerText = 'Complete';
+        dOG.innerText = 'og:title and og:image configured. WhatsApp and Twitter will render full visual cards.';
         score += 20;
       } else if (ogTitle || ogImage) {
-        ogPill.className = 'pill pill-warn';
-        ogPill.innerText = 'Incomplete';
-        ogContent.innerText = 'Missing either og:title or og:image tag. Rich card generation will be incomplete.';
+        bOG.className = 'status-badge badge-warn';
+        bOG.innerText = 'Partial';
+        dOG.innerText = 'Missing either og:title or og:image tag. Social cards will be incomplete.';
         score += 10;
       } else {
-        ogPill.className = 'pill pill-fail';
-        ogPill.innerText = 'Missing';
-        ogContent.innerText = 'No OpenGraph tags found. Shared links will appear as unstyled raw URLs.';
+        bOG.className = 'status-badge badge-fail';
+        bOG.innerText = 'Missing';
+        dOG.innerText = 'Zero OpenGraph tags found. Shared links will appear as raw unformatted text.';
       }
 
-      // H1
+      // 4. H1
       const h1s = doc.querySelectorAll('h1');
-      const h1Pill = document.getElementById('h1Pill');
-      const h1Content = document.getElementById('h1Content');
+      const bH1 = document.getElementById('badgeH1');
+      const dH1 = document.getElementById('descH1');
+
       if (h1s.length === 1) {
-        h1Pill.className = 'pill pill-pass';
-        h1Pill.innerText = 'Optimal';
-        h1Content.innerText = `Single H1 found: "${h1s[0].innerText.trim()}"`;
+        bH1.className = 'status-badge badge-pass';
+        bH1.innerText = 'Optimal';
+        dH1.innerText = `Single primary <h1> found: "${h1s[0].innerText.trim()}"`;
         score += 20;
       } else if (h1s.length === 0) {
-        h1Pill.className = 'pill pill-fail';
-        h1Pill.innerText = 'Missing';
-        h1Content.innerText = 'No <h1> heading tag found on the page.';
+        bH1.className = 'status-badge badge-fail';
+        bH1.innerText = 'Missing';
+        dH1.innerText = 'No <h1> heading detected. Every page must contain a single primary heading.';
       } else {
-        h1Pill.className = 'pill pill-warn';
-        h1Pill.innerText = `${h1s.length} Found`;
-        h1Content.innerText = 'Multiple <h1> tags detected. Semantic hierarchy standard requires exactly one primary H1.';
+        bH1.className = 'status-badge badge-warn';
+        bH1.innerText = `${h1s.length} Found`;
+        dH1.innerText = 'Multiple <h1> tags detected. Modern SEO requires exactly one <h1> per document.';
         score += 10;
       }
 
-      // Update Score
+      // Overall Score
       const scoreNum = document.getElementById('scoreNum');
-      const scoreText = document.getElementById('scoreText');
+      const scoreGrade = document.getElementById('scoreGrade');
       scoreNum.innerText = score;
+
       if (score >= 80) {
         scoreNum.className = 'score-number score-good';
-        scoreText.innerText = 'Exceptional SEO Health — High SERP Visibility';
+        scoreGrade.innerText = 'Optimal Readiness';
       } else if (score >= 50) {
         scoreNum.className = 'score-number score-warn';
-        scoreText.innerText = 'Moderate Health — Key Ranking Signals Missing';
+        scoreGrade.innerText = 'Moderate Issues';
       } else {
         scoreNum.className = 'score-number score-bad';
-        scoreText.innerText = 'Critical Ranking Penalties Detected';
+        scoreGrade.innerText = 'Critical Flaws';
       }
-
-      document.getElementById('results').style.display = 'block';
-      document.getElementById('results').scrollIntoView({ behavior: 'smooth' });
     }
+
+    // Run sample on load
+    loadPreset('optimized');
   </script>
 </body>
 </html>
